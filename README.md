@@ -73,16 +73,16 @@ Contains the pipeline to <br />
 See README inside the folder <br /> 
 
 
-**Full_Scenario folder**
+**Full_Scenario (Full_1) folder**
 
 Contains the pipeline to <br />
 1. Create a dynamic model that accepts at run time PECs + Green Credit Policy parameters and saves it  <br />
 2. Load the trained model and inserts modified pecs in json format  <br />
 See README inside the folder <br /> 
 
-**Full_Scenario_CCA folder**
+**Full_Scenario_CCA (Full_2) folder**
 Contains the pipeline to <br />
-1. Create a dynamic model that accepts at run time PECs + Green Credit Policy parameters + Climate change adaptation (climate losses) and saves it  <br />
+1. Create a dynamic model that accepts at run time PECs + Green Credit Policy parameters + Climate change adaptation (climate losses) + Saturation fund mechanism and saves it  <br />
 2. Load the trained model and inserts modified pecs in json format  <br />
 See README inside the folder <br /> 
 
