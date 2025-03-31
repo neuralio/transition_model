@@ -1,0 +1,8 @@
+{
+"type": "FeatureCollection",
+"name": "Pilot_Thess_Imathia",
+"crs": { "type": "name", "properties": { "name": "urn:ogc:def:crs:OGC:1.3:CRS84" } },
+"features": [
+{ "type": "Feature", "properties": { "id": 1, "width": 0.760366, "height": 0.446926, "area": 0.339827, "perimeter": 2.414584 }, "geometry": { "type": "MultiPolygon", "coordinates": [ [ [ [ 22.025676300977867, 40.457183195558564 ], [ 22.025676300977867, 40.904109420293729 ], [ 22.786042278788166, 40.904109420293729 ], [ 22.786042278788166, 40.457183195558564 ], [ 22.025676300977867, 40.457183195558564 ] ] ] ] } }
+]
+}

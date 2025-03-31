@@ -1,0 +1,1 @@
+aws s3 cp s3://raster/COP30/ . --recursive --endpoint-url https://opentopography.s3.sdsc.edu --no-sign-request

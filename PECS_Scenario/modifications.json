@@ -1,0 +1,19 @@
+{
+    "physis": {
+        "health_status": 0.95,
+        "labor_availability": 0.75
+    },
+    "emotion": {
+        "stress_level": 0.15,
+        "satisfaction": 0.85
+    },
+    "cognition": {
+        "policy_incentives": 0.65,
+        "information_access": 0.75
+    },
+    "social": {
+        "social_influence": 0.55,
+        "community_participation": 0.65
+    }
+}
+

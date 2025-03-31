@@ -1,0 +1,305 @@
+<graph id="Graph">
+  <version>1.0</version>
+  <node id="Read">
+    <operator>Read</operator>
+    <sources/>
+    <parameters class="com.bc.ceres.binding.dom.XppDomElement">
+      <useAdvancedOptions>false</useAdvancedOptions>
+      <file>${Input}</file>
+      <copyMetadata>true</copyMetadata>
+      <pixelRegion>0,0,10980,10980</pixelRegion>
+      <bandNames/>
+      <maskNames/>
+    </parameters>
+  </node>
+  <node id="Read(2)">
+    <operator>Read</operator>
+    <sources/>
+    <parameters class="com.bc.ceres.binding.dom.XppDomElement">
+      <useAdvancedOptions>false</useAdvancedOptions>
+      <file>${Input}</file>
+      <copyMetadata>true</copyMetadata>
+      <bandNames>B1,B2,B3,B4,B5,B6,B7,B8,B8A,B9,B11,B12,quality_aot,quality_wvp,quality_cloud_confidence,quality_snow_confidence,quality_scene_classification,B_detector_footprint_B1,B_detector_footprint_B2,B_detector_footprint_B3,B_detector_footprint_B4,B_detector_footprint_B5,B_detector_footprint_B6,B_detector_footprint_B7,B_detector_footprint_B8,B_detector_footprint_B8A,B_detector_footprint_B9,B_detector_footprint_B11,B_detector_footprint_B12,B_ancillary_lost_B1,B_ancillary_degraded_B1,B_msi_lost_B1,B_msi_degraded_B1,B_defective_B1,B_nodata_B1,B_partially_corrected_crosstalk_B1,B_saturated_l1a_B1,B_ancillary_lost_B2,B_ancillary_degraded_B2,B_msi_lost_B2,B_msi_degraded_B2,B_defective_B2,B_nodata_B2,B_partially_corrected_crosstalk_B2,B_saturated_l1a_B2,B_ancillary_lost_B3,B_ancillary_degraded_B3,B_msi_lost_B3,B_msi_degraded_B3,B_defective_B3,B_nodata_B3,B_partially_corrected_crosstalk_B3,B_saturated_l1a_B3,B_ancillary_lost_B4,B_ancillary_degraded_B4,B_msi_lost_B4,B_msi_degraded_B4,B_defective_B4,B_nodata_B4,B_partially_corrected_crosstalk_B4,B_saturated_l1a_B4,B_ancillary_lost_B5,B_ancillary_degraded_B5,B_msi_lost_B5,B_msi_degraded_B5,B_defective_B5,B_nodata_B5,B_partially_corrected_crosstalk_B5,B_saturated_l1a_B5,B_ancillary_lost_B6,B_ancillary_degraded_B6,B_msi_lost_B6,B_msi_degraded_B6,B_defective_B6,B_nodata_B6,B_partially_corrected_crosstalk_B6,B_saturated_l1a_B6,B_ancillary_lost_B7,B_ancillary_degraded_B7,B_msi_lost_B7,B_msi_degraded_B7,B_defective_B7,B_nodata_B7,B_partially_corrected_crosstalk_B7,B_saturated_l1a_B7,B_ancillary_lost_B8,B_ancillary_degraded_B8,B_msi_lost_B8,B_msi_degraded_B8,B_defective_B8,B_nodata_B8,B_partially_corrected_crosstalk_B8,B_saturated_l1a_B8,B_ancillary_lost_B8A,B_ancillary_degraded_B8A,B_msi_lost_B8A,B_msi_degraded_B8A,B_defective_B8A,B_nodata_B8A,B_partially_corrected_crosstalk_B8A,B_saturated_l1a_B8A,B_ancillary_lost_B9,B_ancillary_degraded_B9,B_msi_lost_B9,B_msi_degraded_B9,B_defective_B9,B_nodata_B9,B_partially_corrected_crosstalk_B9,B_saturated_l1a_B9,B_ancillary_lost_B11,B_ancillary_degraded_B11,B_msi_lost_B11,B_msi_degraded_B11,B_defective_B11,B_nodata_B11,B_partially_corrected_crosstalk_B11,B_saturated_l1a_B11,B_ancillary_lost_B12,B_ancillary_degraded_B12,B_msi_lost_B12,B_msi_degraded_B12,B_defective_B12,B_nodata_B12,B_partially_corrected_crosstalk_B12,B_saturated_l1a_B12,B_opaque_clouds,B_cirrus_clouds,B_snow_and_ice_areas,view_zenith_mean,view_azimuth_mean,sun_zenith,sun_azimuth,view_zenith_B1,view_azimuth_B1,view_zenith_B2,view_azimuth_B2,view_zenith_B3,view_azimuth_B3,view_zenith_B4,view_azimuth_B4,view_zenith_B5,view_azimuth_B5,view_zenith_B6,view_azimuth_B6,view_zenith_B7,view_azimuth_B7,view_zenith_B8,view_azimuth_B8,view_zenith_B8A,view_azimuth_B8A,view_zenith_B9,view_azimuth_B9,view_zenith_B10,view_azimuth_B10,view_zenith_B11,view_azimuth_B11,view_zenith_B12,view_azimuth_B12</bandNames>
+      <pixelRegion>0,0,10980,10980</pixelRegion>
+      <maskNames/>
+    </parameters>
+  </node>
+  <node id="Resample">
+    <operator>Resample</operator>
+    <sources>
+      <sourceProduct refid="Read"/>
+    </sources>
+    <parameters class="com.bc.ceres.binding.dom.XppDomElement">
+      <referenceBand/>
+      <targetWidth/>
+      <targetHeight/>
+      <targetResolution>10</targetResolution>
+      <upsampling>Nearest</upsampling>
+      <downsampling>Mean</downsampling>
+      <flagDownsampling>First</flagDownsampling>
+      <resamplingPreset/>
+      <bandResamplings/>
+      <resampleOnPyramidLevels>true</resampleOnPyramidLevels>
+    </parameters>
+  </node>
+  <node id="Resample(2)">
+    <operator>Resample</operator>
+    <sources>
+      <sourceProduct refid="Read(2)"/>
+    </sources>
+    <parameters class="com.bc.ceres.binding.dom.XppDomElement">
+      <referenceBand/>
+      <targetWidth/>
+      <targetHeight/>
+      <targetResolution>10</targetResolution>
+      <upsampling>Nearest</upsampling>
+      <downsampling>Mean</downsampling>
+      <flagDownsampling>First</flagDownsampling>
+      <resamplingPreset/>
+      <bandResamplings/>
+      <resampleOnPyramidLevels>true</resampleOnPyramidLevels>
+    </parameters>
+  </node>
+  <node id="Subset">
+    <operator>Subset</operator>
+    <sources>
+      <sourceProduct refid="Resample"/>
+    </sources>
+    <parameters class="com.bc.ceres.binding.dom.XppDomElement">
+      <sourceBands>B2,B3,B4,B5,B6,B7,B8,B8A,B9,B11,B12,quality_aot,quality_wvp,quality_cloud_confidence,quality_snow_confidence,quality_scene_classification,view_zenith_mean,view_azimuth_mean,sun_zenith,sun_azimuth,view_zenith_B1,view_azimuth_B1,view_zenith_B2,view_azimuth_B2,view_zenith_B3,view_azimuth_B3,view_zenith_B4,view_azimuth_B4,view_zenith_B5,view_azimuth_B5,view_zenith_B6,view_azimuth_B6,view_zenith_B7,view_azimuth_B7,view_zenith_B8,view_azimuth_B8,view_zenith_B8A,view_azimuth_B8A,view_zenith_B9,view_azimuth_B9,view_zenith_B10,view_azimuth_B10,view_zenith_B11,view_azimuth_B11,view_zenith_B12,view_azimuth_B12</sourceBands>
+      <tiePointGrids/>
+      <region>0,0,0,0</region>
+      <referenceBand/>
+      <geoRegion>${wkt}</geoRegion>
+      <subSamplingX>1</subSamplingX>
+      <subSamplingY>1</subSamplingY>
+      <fullSwath>false</fullSwath>
+      <copyMetadata>true</copyMetadata>
+    </parameters>
+  </node>
+  <node id="Subset(2)">
+    <operator>Subset</operator>
+    <sources>
+      <sourceProduct refid="Resample(2)"/>
+    </sources>
+    <parameters class="com.bc.ceres.binding.dom.XppDomElement">
+      <sourceBands>B2,B3,B4,B5,B6,B7,B8,B8A,B9,B11,B12,quality_aot,quality_wvp,quality_cloud_confidence,quality_snow_confidence,quality_scene_classification,view_zenith_mean,view_azimuth_mean,sun_zenith,sun_azimuth,view_zenith_B1,view_azimuth_B1,view_zenith_B2,view_azimuth_B2,view_zenith_B3,view_azimuth_B3,view_zenith_B4,view_azimuth_B4,view_zenith_B5,view_azimuth_B5,view_zenith_B6,view_azimuth_B6,view_zenith_B7,view_azimuth_B7,view_zenith_B8,view_azimuth_B8,view_zenith_B8A,view_azimuth_B8A,view_zenith_B9,view_azimuth_B9,view_zenith_B10,view_azimuth_B10,view_zenith_B11,view_azimuth_B11,view_zenith_B12,view_azimuth_B12</sourceBands>
+      <tiePointGrids/>
+      <region>0,0,0,0</region>
+      <referenceBand/>
+      <geoRegion>${wkt}</geoRegion>
+      <subSamplingX>1</subSamplingX>
+      <subSamplingY>1</subSamplingY>
+      <fullSwath>false</fullSwath>
+      <copyMetadata>true</copyMetadata>
+    </parameters>
+  </node>
+  <node id="Reproject">
+    <operator>Reproject</operator>
+    <sources>
+      <sourceProduct refid="Subset"/>
+    </sources>
+    <parameters class="com.bc.ceres.binding.dom.XppDomElement">
+      <wktFile/>
+      <crs>GEOGCS[&quot;WGS84(DD)&quot;, 
+  DATUM[&quot;WGS84&quot;, 
+    SPHEROID[&quot;WGS84&quot;, 6378137.0, 298.257223563]], 
+  PRIMEM[&quot;Greenwich&quot;, 0.0], 
+  UNIT[&quot;degree&quot;, 0.017453292519943295], 
+  AXIS[&quot;Geodetic longitude&quot;, EAST], 
+  AXIS[&quot;Geodetic latitude&quot;, NORTH]]</crs>
+      <resampling>Nearest</resampling>
+      <referencePixelX/>
+      <referencePixelY/>
+      <easting/>
+      <northing/>
+      <orientation/>
+      <pixelSizeX/>
+      <pixelSizeY/>
+      <width/>
+      <height/>
+      <tileSizeX/>
+      <tileSizeY/>
+      <orthorectify>false</orthorectify>
+      <elevationModelName/>
+      <noDataValue>NaN</noDataValue>
+      <includeTiePointGrids>true</includeTiePointGrids>
+      <addDeltaBands>false</addDeltaBands>
+    </parameters>
+  </node>
+  <node id="Reproject(2)">
+    <operator>Reproject</operator>
+    <sources>
+      <sourceProduct refid="Subset(2)"/>
+    </sources>
+    <parameters class="com.bc.ceres.binding.dom.XppDomElement">
+      <wktFile/>
+      <crs>GEOGCS[&quot;WGS84(DD)&quot;, 
+  DATUM[&quot;WGS84&quot;, 
+    SPHEROID[&quot;WGS84&quot;, 6378137.0, 298.257223563]], 
+  PRIMEM[&quot;Greenwich&quot;, 0.0], 
+  UNIT[&quot;degree&quot;, 0.017453292519943295], 
+  AXIS[&quot;Geodetic longitude&quot;, EAST], 
+  AXIS[&quot;Geodetic latitude&quot;, NORTH]]</crs>
+      <resampling>Nearest</resampling>
+      <referencePixelX/>
+      <referencePixelY/>
+      <easting/>
+      <northing/>
+      <orientation/>
+      <pixelSizeX/>
+      <pixelSizeY/>
+      <width/>
+      <height/>
+      <tileSizeX/>
+      <tileSizeY/>
+      <orthorectify>false</orthorectify>
+      <elevationModelName/>
+      <noDataValue>NaN</noDataValue>
+      <includeTiePointGrids>true</includeTiePointGrids>
+      <addDeltaBands>false</addDeltaBands>
+    </parameters>
+  </node>
+  <node id="SaviOp">
+    <operator>SaviOp</operator>
+    <sources>
+      <sourceProduct refid="Reproject(2)"/>
+    </sources>
+    <parameters class="com.bc.ceres.binding.dom.XppDomElement">
+      <resampleType>None</resampleType>
+      <upsampling/>
+      <downsampling/>
+      <redFactor>1.0</redFactor>
+      <nirFactor>1.0</nirFactor>
+      <soilCorrectionFactor>0.0</soilCorrectionFactor>
+      <redSourceBand>B4</redSourceBand>
+      <nirSourceBand>B8</nirSourceBand>
+    </parameters>
+  </node>
+  <node id="BandMaths"> <!-- QUALITY MASKING -->
+    <operator>BandMaths</operator>
+    <sources>
+      <sourceProduct refid="Reproject"/>
+    </sources>
+    <parameters class="com.bc.ceres.binding.dom.XppDomElement">
+      <targetBands>
+        <targetBand>
+          <name>QM</name>
+          <type>float32</type>
+          <expression>if (<!--quality_scene_classification == 0 || quality_scene_classification == 1 || quality_scene_classification == 2 || quality_scene_classification == 3 ||-->quality_scene_classification == 4 || quality_scene_classification == 5 <!--|| quality_scene_classification == 6 || quality_scene_classification == 7 || quality_scene_classification == 8 || quality_scene_classification == 9 || quality_scene_classification == 10 || quality_scene_classification == 11-->) then 1 else NaN</expression>
+          <description/>
+          <unit/>
+          <noDataValue>NaN</noDataValue>
+        </targetBand>
+      </targetBands>
+      <variables/>
+    </parameters>
+  </node>
+  <node id="BandMerge">
+    <operator>BandMerge</operator>
+    <sources>
+      <sourceProduct refid="BandMaths"/>
+      <sourceProduct.1 refid="SaviOp"/>
+    </sources>
+    <parameters class="com.bc.ceres.binding.dom.XppDomElement">
+      <sourceBands/>
+      <geographicError>1.0E-5</geographicError>
+    </parameters>
+  </node>
+  <node id="BandMaths(2)"> <!-- BIT FLAG MASKING -->
+    <operator>BandMaths</operator>
+    <sources>
+      <sourceProduct refid="BandMerge"/>
+    </sources>
+    <parameters class="com.bc.ceres.binding.dom.XppDomElement">
+      <targetBands>
+        <targetBand>
+          <name>NDVI_Masked</name>
+          <type>float32</type>
+          <expression>if (bit_set(flags ,0) == 1 OR bit_set(flags ,1) == 1 OR bit_set(flags ,2) == 1) then NaN else (((QM * savi) * 125)+125)</expression>
+          <description/>
+          <unit/>
+          <noDataValue>NaN</noDataValue>
+        </targetBand>
+      </targetBands>
+      <variables/>
+    </parameters>
+  </node>
+   <node id="SetNoDataValue">
+    <operator>SetNoDataValue</operator>
+    <sources>
+      <sourceProduct refid="BandMaths(2)"/>
+    </sources>
+    <parameters class="com.bc.ceres.binding.dom.XppDomElement">
+      <noDataValueUsed>false</noDataValueUsed>
+      <noDataValue>255</noDataValue>
+    </parameters>
+  </node>
+  <node id="Convert-Datatype">
+    <operator>Convert-Datatype</operator>
+     <sources>
+      <sourceProduct refid="SetNoDataValue"/>
+    </sources>
+    <parameters class="com.bc.ceres.binding.dom.XppDomElement">
+      <sourceBands>NDVI_Masked</sourceBands>
+      <targetDataType>uint8</targetDataType>
+      <targetScalingStr>Truncate</targetScalingStr>
+      <targetNoDataValue>255</targetNoDataValue>
+    </parameters>
+  </node>
+  <node id="Write">
+    <operator>Write</operator>
+    <sources>
+      <sourceProduct refid="Convert-Datatype"/>
+    </sources>
+    <parameters class="com.bc.ceres.binding.dom.XppDomElement">
+      <file>${Output_NDVI}</file>
+      <formatName>GeoTIFF</formatName>
+    </parameters>
+  </node>
+  <applicationData id="Presentation">
+    <Description/> 
+    <node id="Read">
+            <displayPosition x="14.0" y="16.0"/>
+    </node>
+    <node id="Read(2)">
+      <displayPosition x="13.0" y="290.0"/>
+    </node>
+    <node id="Resample">
+      <displayPosition x="38.0" y="53.0"/>
+    </node>
+    <node id="Resample(2)">
+      <displayPosition x="52.0" y="248.0"/>
+    </node>
+    <node id="Subset">
+      <displayPosition x="100.0" y="89.0"/>
+    </node>
+    <node id="Subset(2)">
+      <displayPosition x="110.0" y="210.0"/>
+    </node>
+    <node id="Reproject">
+      <displayPosition x="167.0" y="122.0"/>
+    </node>
+    <node id="Reproject(2)">
+      <displayPosition x="159.0" y="176.0"/>
+    </node>
+    <node id="SaviOp">
+      <displayPosition x="273.0" y="178.0"/>
+    </node>
+    <node id="BandMaths">
+      <displayPosition x="260.0" y="120.0"/>
+    </node>
+    <node id="BandMerge">
+      <displayPosition x="370.0" y="151.0"/>
+    </node>
+    <node id="BandMaths(2)">
+      <displayPosition x="467.0" y="146.0"/>
+    </node>
+    <node id="Convert-Datatype">
+      <displayPosition x="586.0" y="149.0"/>
+    </node>
+    <node id="Write">
+      <displayPosition x="727.0" y="148.0"/>
+    </node>
+  </applicationData>
+</graph>
