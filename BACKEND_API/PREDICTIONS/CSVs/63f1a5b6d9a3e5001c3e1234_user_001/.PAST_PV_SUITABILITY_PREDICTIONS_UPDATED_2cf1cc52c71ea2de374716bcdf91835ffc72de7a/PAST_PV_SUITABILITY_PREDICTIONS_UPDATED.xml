@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<Indexer>
+    <coverages>
+        <coverage>
+            <schema name="score">
+                <attributes>the_geom:Polygon,imageindex:Integer,time:java.util.Date</attributes>
+            </schema>
+            <origName>score</origName>
+            <name>score</name>
+        </coverage>
+    </coverages>
+</Indexer>

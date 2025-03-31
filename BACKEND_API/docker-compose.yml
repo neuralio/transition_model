@@ -1,0 +1,14 @@
+version: "3.8"
+
+services:
+  fastapi:
+    build: .
+    container_name: fastapi-pv-app
+    ports:
+      - "8001:8001"
+    environment:
+      - PYTHONDONTWRITEBYTECODE=1
+      - PYTHONUNBUFFERED=1
+    volumes:
+      - ./:/app  # Mount the current host directory to /app in the container
+

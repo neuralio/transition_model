@@ -1,0 +1,432 @@
+2025-02-21 10:58:12,304 - INFO - Started server process [8]
+2025-02-21 10:58:12,305 - INFO - Waiting for application startup.
+2025-02-21 10:58:12,306 - INFO - Application startup complete.
+2025-02-21 10:58:21,294 - WARNING - You are saving your model as an HDF5 file via `model.save()` or `keras.saving.save_model(model)`. This file format is considered legacy. We recommend using instead the native Keras format, e.g. `model.save('my_model.keras')` or `keras.saving.save_model(model, 'my_model.keras')`. 
+2025-02-21 10:58:22,212 - INFO - Training completed successfully.
+2025-02-24 11:43:39,290 - INFO - Started server process [8]
+2025-02-24 11:43:39,290 - INFO - Waiting for application startup.
+2025-02-24 11:43:39,291 - INFO - Application startup complete.
+2025-02-24 11:58:56,140 - WARNING - Compiled the loaded model, but the compiled metrics have yet to be built. `model.compile_metrics` will be empty until you train or evaluate the model.
+2025-02-24 11:58:56,165 - ERROR - Prediction failed.
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.9/site-packages/xarray/backends/file_manager.py", line 211, in _acquire_with_cache_info
+    file = self._cache[self._key]
+  File "/usr/local/lib/python3.9/site-packages/xarray/backends/lru_cache.py", line 56, in __getitem__
+    value = self._cache[key]
+KeyError: [<class 'netCDF4._netCDF4.Dataset'>, ('/app/INPUT/ERA5_LAND/input_ERA5_LAND_SOLAR.nc',), 'r', (('clobber', True), ('diskless', False), ('format', 'NETCDF4'), ('persist', False)), '26cdb53d-d836-4b9b-bd02-0c570997e439']
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/app/./main.py", line 68, in predict_endpoint
+    df_rsds_max = load_rsds_data()
+  File "/app/./pv_module.py", line 124, in load_rsds_data
+    ds = xr.open_dataset(rsds_file)
+  File "/usr/local/lib/python3.9/site-packages/xarray/backends/api.py", line 588, in open_dataset
+    backend_ds = backend.open_dataset(
+  File "/usr/local/lib/python3.9/site-packages/xarray/backends/netCDF4_.py", line 645, in open_dataset
+    store = NetCDF4DataStore.open(
+  File "/usr/local/lib/python3.9/site-packages/xarray/backends/netCDF4_.py", line 408, in open
+    return cls(manager, group=group, mode=mode, lock=lock, autoclose=autoclose)
+  File "/usr/local/lib/python3.9/site-packages/xarray/backends/netCDF4_.py", line 355, in __init__
+    self.format = self.ds.data_model
+  File "/usr/local/lib/python3.9/site-packages/xarray/backends/netCDF4_.py", line 417, in ds
+    return self._acquire()
+  File "/usr/local/lib/python3.9/site-packages/xarray/backends/netCDF4_.py", line 411, in _acquire
+    with self._manager.acquire_context(needs_lock) as root:
+  File "/usr/local/lib/python3.9/contextlib.py", line 119, in __enter__
+    return next(self.gen)
+  File "/usr/local/lib/python3.9/site-packages/xarray/backends/file_manager.py", line 199, in acquire_context
+    file, cached = self._acquire_with_cache_info(needs_lock)
+  File "/usr/local/lib/python3.9/site-packages/xarray/backends/file_manager.py", line 217, in _acquire_with_cache_info
+    file = self._opener(*self._args, **kwargs)
+  File "src/netCDF4/_netCDF4.pyx", line 2521, in netCDF4._netCDF4.Dataset.__init__
+  File "src/netCDF4/_netCDF4.pyx", line 2158, in netCDF4._netCDF4._ensure_nc_success
+FileNotFoundError: [Errno 2] No such file or directory: '/app/INPUT/ERA5_LAND/input_ERA5_LAND_SOLAR.nc'
+2025-02-24 11:59:32,418 - WARNING - You are saving your model as an HDF5 file via `model.save()` or `keras.saving.save_model(model)`. This file format is considered legacy. We recommend using instead the native Keras format, e.g. `model.save('my_model.keras')` or `keras.saving.save_model(model, 'my_model.keras')`. 
+2025-02-24 11:59:32,431 - INFO - Training completed successfully.
+2025-02-24 11:59:36,943 - WARNING - Compiled the loaded model, but the compiled metrics have yet to be built. `model.compile_metrics` will be empty until you train or evaluate the model.
+2025-02-24 11:59:36,947 - ERROR - Prediction failed.
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.9/site-packages/xarray/backends/file_manager.py", line 211, in _acquire_with_cache_info
+    file = self._cache[self._key]
+  File "/usr/local/lib/python3.9/site-packages/xarray/backends/lru_cache.py", line 56, in __getitem__
+    value = self._cache[key]
+KeyError: [<class 'netCDF4._netCDF4.Dataset'>, ('/app/INPUT/ERA5_LAND/input_ERA5_LAND_SOLAR.nc',), 'r', (('clobber', True), ('diskless', False), ('format', 'NETCDF4'), ('persist', False)), 'adc359f7-23ce-4fd8-8cbd-e67f236d69b4']
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/app/./main.py", line 68, in predict_endpoint
+    df_rsds_max = load_rsds_data()
+  File "/app/./pv_module.py", line 124, in load_rsds_data
+    ds = xr.open_dataset(rsds_file)
+  File "/usr/local/lib/python3.9/site-packages/xarray/backends/api.py", line 588, in open_dataset
+    backend_ds = backend.open_dataset(
+  File "/usr/local/lib/python3.9/site-packages/xarray/backends/netCDF4_.py", line 645, in open_dataset
+    store = NetCDF4DataStore.open(
+  File "/usr/local/lib/python3.9/site-packages/xarray/backends/netCDF4_.py", line 408, in open
+    return cls(manager, group=group, mode=mode, lock=lock, autoclose=autoclose)
+  File "/usr/local/lib/python3.9/site-packages/xarray/backends/netCDF4_.py", line 355, in __init__
+    self.format = self.ds.data_model
+  File "/usr/local/lib/python3.9/site-packages/xarray/backends/netCDF4_.py", line 417, in ds
+    return self._acquire()
+  File "/usr/local/lib/python3.9/site-packages/xarray/backends/netCDF4_.py", line 411, in _acquire
+    with self._manager.acquire_context(needs_lock) as root:
+  File "/usr/local/lib/python3.9/contextlib.py", line 119, in __enter__
+    return next(self.gen)
+  File "/usr/local/lib/python3.9/site-packages/xarray/backends/file_manager.py", line 199, in acquire_context
+    file, cached = self._acquire_with_cache_info(needs_lock)
+  File "/usr/local/lib/python3.9/site-packages/xarray/backends/file_manager.py", line 217, in _acquire_with_cache_info
+    file = self._opener(*self._args, **kwargs)
+  File "src/netCDF4/_netCDF4.pyx", line 2521, in netCDF4._netCDF4.Dataset.__init__
+  File "src/netCDF4/_netCDF4.pyx", line 2158, in netCDF4._netCDF4._ensure_nc_success
+FileNotFoundError: [Errno 2] No such file or directory: '/app/INPUT/ERA5_LAND/input_ERA5_LAND_SOLAR.nc'
+2025-02-24 12:36:42,109 - WARNING - You are saving your model as an HDF5 file via `model.save()` or `keras.saving.save_model(model)`. This file format is considered legacy. We recommend using instead the native Keras format, e.g. `model.save('my_model.keras')` or `keras.saving.save_model(model, 'my_model.keras')`. 
+2025-02-24 12:36:42,122 - INFO - Training completed successfully.
+2025-02-24 12:39:09,323 - WARNING - Compiled the loaded model, but the compiled metrics have yet to be built. `model.compile_metrics` will be empty until you train or evaluate the model.
+2025-02-24 12:58:22,868 - INFO - Started server process [8]
+2025-02-24 12:58:22,869 - INFO - Waiting for application startup.
+2025-02-24 12:58:22,869 - INFO - Application startup complete.
+2025-02-24 12:59:24,928 - WARNING - Compiled the loaded model, but the compiled metrics have yet to be built. `model.compile_metrics` will be empty until you train or evaluate the model.
+2025-02-24 12:59:24,941 - ERROR - Prediction failed.
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.9/site-packages/xarray/backends/file_manager.py", line 211, in _acquire_with_cache_info
+    file = self._cache[self._key]
+  File "/usr/local/lib/python3.9/site-packages/xarray/backends/lru_cache.py", line 56, in __getitem__
+    value = self._cache[key]
+KeyError: [<class 'netCDF4._netCDF4.Dataset'>, ('/app/INPUT/ERA5_LAND/input_ERA5_LAND_SOLAR.nc',), 'r', (('clobber', True), ('diskless', False), ('format', 'NETCDF4'), ('persist', False)), '32c185a0-9d7f-4ca9-9206-d05bdc07d6fb']
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/app/./main.py", line 68, in predict_endpoint
+    df_rsds_max = load_rsds_data()
+  File "/app/./pv_module.py", line 124, in load_rsds_data
+    ds = xr.open_dataset(rsds_file)
+  File "/usr/local/lib/python3.9/site-packages/xarray/backends/api.py", line 588, in open_dataset
+    backend_ds = backend.open_dataset(
+  File "/usr/local/lib/python3.9/site-packages/xarray/backends/netCDF4_.py", line 645, in open_dataset
+    store = NetCDF4DataStore.open(
+  File "/usr/local/lib/python3.9/site-packages/xarray/backends/netCDF4_.py", line 408, in open
+    return cls(manager, group=group, mode=mode, lock=lock, autoclose=autoclose)
+  File "/usr/local/lib/python3.9/site-packages/xarray/backends/netCDF4_.py", line 355, in __init__
+    self.format = self.ds.data_model
+  File "/usr/local/lib/python3.9/site-packages/xarray/backends/netCDF4_.py", line 417, in ds
+    return self._acquire()
+  File "/usr/local/lib/python3.9/site-packages/xarray/backends/netCDF4_.py", line 411, in _acquire
+    with self._manager.acquire_context(needs_lock) as root:
+  File "/usr/local/lib/python3.9/contextlib.py", line 119, in __enter__
+    return next(self.gen)
+  File "/usr/local/lib/python3.9/site-packages/xarray/backends/file_manager.py", line 199, in acquire_context
+    file, cached = self._acquire_with_cache_info(needs_lock)
+  File "/usr/local/lib/python3.9/site-packages/xarray/backends/file_manager.py", line 217, in _acquire_with_cache_info
+    file = self._opener(*self._args, **kwargs)
+  File "src/netCDF4/_netCDF4.pyx", line 2521, in netCDF4._netCDF4.Dataset.__init__
+  File "src/netCDF4/_netCDF4.pyx", line 2158, in netCDF4._netCDF4._ensure_nc_success
+FileNotFoundError: [Errno 2] No such file or directory: '/app/INPUT/ERA5_LAND/input_ERA5_LAND_SOLAR.nc'
+2025-02-24 13:00:18,317 - WARNING - Compiled the loaded model, but the compiled metrics have yet to be built. `model.compile_metrics` will be empty until you train or evaluate the model.
+2025-02-24 13:00:18,339 - ERROR - Prediction failed.
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.9/site-packages/xarray/backends/file_manager.py", line 211, in _acquire_with_cache_info
+    file = self._cache[self._key]
+  File "/usr/local/lib/python3.9/site-packages/xarray/backends/lru_cache.py", line 56, in __getitem__
+    value = self._cache[key]
+KeyError: [<class 'netCDF4._netCDF4.Dataset'>, ('/app/INPUT/ERA5_LAND/input_ERA5_LAND.nc',), 'r', (('clobber', True), ('diskless', False), ('format', 'NETCDF4'), ('persist', False)), '1e7d19a4-4eed-45c0-918a-d8edd0a49989']
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/app/./main.py", line 70, in predict_endpoint
+    df_tas_mean = load_temperature_data()
+  File "/app/./pv_module.py", line 148, in load_temperature_data
+    ds = xr.open_dataset(tas_file)
+  File "/usr/local/lib/python3.9/site-packages/xarray/backends/api.py", line 588, in open_dataset
+    backend_ds = backend.open_dataset(
+  File "/usr/local/lib/python3.9/site-packages/xarray/backends/netCDF4_.py", line 645, in open_dataset
+    store = NetCDF4DataStore.open(
+  File "/usr/local/lib/python3.9/site-packages/xarray/backends/netCDF4_.py", line 408, in open
+    return cls(manager, group=group, mode=mode, lock=lock, autoclose=autoclose)
+  File "/usr/local/lib/python3.9/site-packages/xarray/backends/netCDF4_.py", line 355, in __init__
+    self.format = self.ds.data_model
+  File "/usr/local/lib/python3.9/site-packages/xarray/backends/netCDF4_.py", line 417, in ds
+    return self._acquire()
+  File "/usr/local/lib/python3.9/site-packages/xarray/backends/netCDF4_.py", line 411, in _acquire
+    with self._manager.acquire_context(needs_lock) as root:
+  File "/usr/local/lib/python3.9/contextlib.py", line 119, in __enter__
+    return next(self.gen)
+  File "/usr/local/lib/python3.9/site-packages/xarray/backends/file_manager.py", line 199, in acquire_context
+    file, cached = self._acquire_with_cache_info(needs_lock)
+  File "/usr/local/lib/python3.9/site-packages/xarray/backends/file_manager.py", line 217, in _acquire_with_cache_info
+    file = self._opener(*self._args, **kwargs)
+  File "src/netCDF4/_netCDF4.pyx", line 2521, in netCDF4._netCDF4.Dataset.__init__
+  File "src/netCDF4/_netCDF4.pyx", line 2158, in netCDF4._netCDF4._ensure_nc_success
+FileNotFoundError: [Errno 2] No such file or directory: '/app/INPUT/ERA5_LAND/input_ERA5_LAND.nc'
+2025-02-24 13:00:44,105 - WARNING - Compiled the loaded model, but the compiled metrics have yet to be built. `model.compile_metrics` will be empty until you train or evaluate the model.
+2025-02-24 13:00:59,607 - INFO - Prediction completed successfully.
+2025-02-24 13:05:55,025 - INFO - Shutting down
+2025-02-24 13:05:55,133 - INFO - Waiting for application shutdown.
+2025-02-24 13:05:55,136 - INFO - Application shutdown complete.
+2025-02-24 13:05:55,136 - INFO - Finished server process [8]
+2025-02-24 13:05:57,517 - INFO - Started server process [12445]
+2025-02-24 13:05:57,517 - INFO - Waiting for application startup.
+2025-02-24 13:05:57,517 - INFO - Application startup complete.
+2025-02-24 13:36:13,174 - INFO - Shutting down
+2025-02-24 13:36:13,280 - INFO - Waiting for application shutdown.
+2025-02-24 13:36:13,283 - INFO - Application shutdown complete.
+2025-02-24 13:36:13,284 - INFO - Finished server process [12445]
+2025-02-24 13:36:15,807 - INFO - Started server process [12462]
+2025-02-24 13:36:15,807 - INFO - Waiting for application startup.
+2025-02-24 13:36:15,808 - INFO - Application startup complete.
+2025-02-24 13:38:33,976 - INFO - Shutting down
+2025-02-24 13:38:34,083 - INFO - Waiting for application shutdown.
+2025-02-24 13:38:34,085 - INFO - Application shutdown complete.
+2025-02-24 13:38:34,086 - INFO - Finished server process [12462]
+2025-02-24 13:38:36,161 - INFO - Started server process [12479]
+2025-02-24 13:38:36,162 - INFO - Waiting for application startup.
+2025-02-24 13:38:36,162 - INFO - Application startup complete.
+2025-02-24 13:39:29,914 - WARNING - Compiled the loaded model, but the compiled metrics have yet to be built. `model.compile_metrics` will be empty until you train or evaluate the model.
+2025-02-24 13:39:45,196 - INFO - Saved predictions to /app/PREDICTIONS/CSVs/PAST_PV_SUITABILITY_PREDICTIONS.csv
+2025-02-24 13:39:45,213 - INFO - Updated predictions saved to /app/PREDICTIONS/CSVs/PAST_PV_SUITABILITY_PREDICTIONS_UPDATED.csv
+2025-02-24 14:23:24,793 - INFO - Shutting down
+2025-02-24 14:23:24,902 - INFO - Waiting for application shutdown.
+2025-02-24 14:23:24,905 - INFO - Application shutdown complete.
+2025-02-24 14:23:24,906 - INFO - Finished server process [12479]
+2025-02-24 14:23:27,406 - INFO - Started server process [24914]
+2025-02-24 14:23:27,406 - INFO - Waiting for application startup.
+2025-02-24 14:23:27,406 - INFO - Application startup complete.
+2025-02-24 14:58:02,190 - INFO - Shutting down
+2025-02-24 14:58:02,298 - INFO - Waiting for application shutdown.
+2025-02-24 14:58:02,300 - INFO - Application shutdown complete.
+2025-02-24 14:58:02,301 - INFO - Finished server process [24914]
+2025-02-25 08:09:42,121 - INFO - Started server process [8]
+2025-02-25 08:09:42,121 - INFO - Waiting for application startup.
+2025-02-25 08:09:42,122 - INFO - Application startup complete.
+2025-02-25 08:12:35,587 - WARNING - You are saving your model as an HDF5 file via `model.save()` or `keras.saving.save_model(model)`. This file format is considered legacy. We recommend using instead the native Keras format, e.g. `model.save('my_model.keras')` or `keras.saving.save_model(model, 'my_model.keras')`. 
+2025-02-25 08:12:35,602 - INFO - Training completed successfully.
+2025-02-25 08:19:47,392 - INFO - Shutting down
+2025-02-25 08:19:47,499 - INFO - Waiting for application shutdown.
+2025-02-25 08:19:47,502 - INFO - Application shutdown complete.
+2025-02-25 08:19:47,503 - INFO - Finished server process [8]
+2025-02-25 08:36:15,880 - INFO - Started server process [8]
+2025-02-25 08:36:15,880 - INFO - Waiting for application startup.
+2025-02-25 08:36:15,881 - INFO - Application startup complete.
+2025-02-25 08:55:20,561 - INFO - Shutting down
+2025-02-25 08:55:20,666 - INFO - Waiting for application shutdown.
+2025-02-25 08:55:20,668 - INFO - Application shutdown complete.
+2025-02-25 08:55:20,668 - INFO - Finished server process [8]
+2025-02-25 08:55:22,727 - INFO - Started server process [27]
+2025-02-25 08:55:22,727 - INFO - Waiting for application startup.
+2025-02-25 08:55:22,727 - INFO - Application startup complete.
+2025-02-25 08:58:03,403 - INFO - Shutting down
+2025-02-25 08:58:03,510 - INFO - Waiting for application shutdown.
+2025-02-25 08:58:03,512 - INFO - Application shutdown complete.
+2025-02-25 08:58:03,514 - INFO - Finished server process [27]
+2025-02-25 08:58:05,568 - INFO - Started server process [44]
+2025-02-25 08:58:05,569 - INFO - Waiting for application startup.
+2025-02-25 08:58:05,569 - INFO - Application startup complete.
+2025-02-25 08:58:54,754 - INFO - Shutting down
+2025-02-25 08:58:54,863 - INFO - Waiting for application shutdown.
+2025-02-25 08:58:54,866 - INFO - Application shutdown complete.
+2025-02-25 08:58:54,867 - INFO - Finished server process [44]
+2025-02-25 08:58:56,958 - INFO - Started server process [61]
+2025-02-25 08:58:56,958 - INFO - Waiting for application startup.
+2025-02-25 08:58:56,958 - INFO - Application startup complete.
+2025-02-25 08:59:03,230 - INFO - Shutting down
+2025-02-25 08:59:03,335 - INFO - Waiting for application shutdown.
+2025-02-25 08:59:03,338 - INFO - Application shutdown complete.
+2025-02-25 08:59:03,339 - INFO - Finished server process [61]
+2025-02-25 08:59:05,417 - INFO - Started server process [78]
+2025-02-25 08:59:05,418 - INFO - Waiting for application startup.
+2025-02-25 08:59:05,418 - INFO - Application startup complete.
+2025-02-25 08:59:17,273 - WARNING - You are saving your model as an HDF5 file via `model.save()` or `keras.saving.save_model(model)`. This file format is considered legacy. We recommend using instead the native Keras format, e.g. `model.save('my_model.keras')` or `keras.saving.save_model(model, 'my_model.keras')`. 
+2025-02-25 08:59:17,286 - INFO - Training completed successfully.
+2025-02-25 08:59:26,721 - WARNING - Compiled the loaded model, but the compiled metrics have yet to be built. `model.compile_metrics` will be empty until you train or evaluate the model.
+2025-02-25 08:59:26,802 - ERROR - Prediction failed.
+Traceback (most recent call last):
+  File "/app/./main.py", line 114, in predict_endpoint
+    predictions_df, task_prediction_dir = predict_pv_suitability_past(model, df_rsds_max, df_rsds_min, df_tas_mean, df_slope)
+  File "/app/./pv_module.py", line 201, in predict_pv_suitability_past
+    config, task_id, user_id = load_config(INPUT_JSON_PATH)
+  File "/app/./pv_module.py", line 74, in load_config
+    config = json.load(f)
+  File "/usr/local/lib/python3.9/json/__init__.py", line 293, in load
+    return loads(fp.read(),
+  File "/usr/local/lib/python3.9/json/__init__.py", line 346, in loads
+    return _default_decoder.decode(s)
+  File "/usr/local/lib/python3.9/json/decoder.py", line 337, in decode
+    obj, end = self.raw_decode(s, idx=_w(s, 0).end())
+  File "/usr/local/lib/python3.9/json/decoder.py", line 355, in raw_decode
+    raise JSONDecodeError("Expecting value", s, err.value) from None
+json.decoder.JSONDecodeError: Expecting value: line 1 column 1 (char 0)
+2025-02-25 09:04:20,160 - INFO - Shutting down
+2025-02-25 09:04:20,267 - INFO - Waiting for application shutdown.
+2025-02-25 09:04:20,268 - INFO - Application shutdown complete.
+2025-02-25 09:04:20,269 - INFO - Finished server process [78]
+2025-02-25 09:05:22,456 - INFO - Started server process [8]
+2025-02-25 09:05:22,457 - INFO - Waiting for application startup.
+2025-02-25 09:05:22,457 - INFO - Application startup complete.
+2025-02-25 09:05:34,386 - WARNING - Compiled the loaded model, but the compiled metrics have yet to be built. `model.compile_metrics` will be empty until you train or evaluate the model.
+2025-02-25 09:05:49,403 - ERROR - Prediction failed.
+Traceback (most recent call last):
+  File "/app/./main.py", line 116, in predict_endpoint
+    updated_df = apply_conditions_to_predictions(
+  File "/app/./pv_module.py", line 293, in apply_conditions_to_predictions
+    df = pd.read_csv(pred_file)
+  File "/usr/local/lib/python3.9/site-packages/pandas/io/parsers/readers.py", line 1026, in read_csv
+    return _read(filepath_or_buffer, kwds)
+  File "/usr/local/lib/python3.9/site-packages/pandas/io/parsers/readers.py", line 620, in _read
+    parser = TextFileReader(filepath_or_buffer, **kwds)
+  File "/usr/local/lib/python3.9/site-packages/pandas/io/parsers/readers.py", line 1620, in __init__
+    self._engine = self._make_engine(f, self.engine)
+  File "/usr/local/lib/python3.9/site-packages/pandas/io/parsers/readers.py", line 1880, in _make_engine
+    self.handles = get_handle(
+  File "/usr/local/lib/python3.9/site-packages/pandas/io/common.py", line 873, in get_handle
+    handle = open(
+FileNotFoundError: [Errno 2] No such file or directory: '/app/PREDICTIONS/CSVs/63f1a5b6d9a3e5001c3e1234_user_001/PAST_PV_SUITABILITY_PREDICTIONS.csv'
+2025-02-25 09:09:03,902 - INFO - Shutting down
+2025-02-25 09:09:04,011 - INFO - Waiting for application shutdown.
+2025-02-25 09:09:04,012 - INFO - Application shutdown complete.
+2025-02-25 09:09:04,013 - INFO - Finished server process [8]
+2025-02-25 09:09:06,134 - INFO - Started server process [12445]
+2025-02-25 09:09:06,134 - INFO - Waiting for application startup.
+2025-02-25 09:09:06,134 - INFO - Application startup complete.
+2025-02-25 09:09:29,182 - INFO - Shutting down
+2025-02-25 09:09:29,285 - INFO - Waiting for application shutdown.
+2025-02-25 09:09:29,287 - INFO - Application shutdown complete.
+2025-02-25 09:09:29,288 - INFO - Finished server process [12445]
+2025-02-25 09:09:31,377 - INFO - Started server process [12462]
+2025-02-25 09:09:31,377 - INFO - Waiting for application startup.
+2025-02-25 09:09:31,377 - INFO - Application startup complete.
+2025-02-25 09:09:47,025 - INFO - Shutting down
+2025-02-25 09:09:47,131 - INFO - Waiting for application shutdown.
+2025-02-25 09:09:47,132 - INFO - Application shutdown complete.
+2025-02-25 09:09:47,133 - INFO - Finished server process [12462]
+2025-02-25 09:10:11,763 - INFO - Started server process [8]
+2025-02-25 09:10:11,764 - INFO - Waiting for application startup.
+2025-02-25 09:10:11,764 - INFO - Application startup complete.
+2025-02-25 09:10:31,594 - WARNING - Compiled the loaded model, but the compiled metrics have yet to be built. `model.compile_metrics` will be empty until you train or evaluate the model.
+2025-02-25 09:25:11,358 - INFO - Shutting down
+2025-02-25 09:25:11,463 - INFO - Waiting for application shutdown.
+2025-02-25 09:25:11,465 - INFO - Application shutdown complete.
+2025-02-25 09:25:11,466 - INFO - Finished server process [8]
+2025-02-25 09:25:13,575 - INFO - Started server process [12443]
+2025-02-25 09:25:13,575 - INFO - Waiting for application startup.
+2025-02-25 09:25:13,576 - INFO - Application startup complete.
+2025-02-25 09:38:54,609 - INFO - Shutting down
+2025-02-25 09:38:54,717 - INFO - Waiting for application shutdown.
+2025-02-25 09:38:54,720 - INFO - Application shutdown complete.
+2025-02-25 09:38:54,721 - INFO - Finished server process [12443]
+2025-02-25 09:38:57,080 - INFO - Started server process [12460]
+2025-02-25 09:38:57,081 - INFO - Waiting for application startup.
+2025-02-25 09:38:57,081 - INFO - Application startup complete.
+2025-02-25 09:42:22,707 - INFO - Shutting down
+2025-02-25 09:42:22,813 - INFO - Waiting for application shutdown.
+2025-02-25 09:42:22,816 - INFO - Application shutdown complete.
+2025-02-25 09:42:22,816 - INFO - Finished server process [12460]
+2025-02-25 09:42:26,514 - INFO - Started server process [12494]
+2025-02-25 09:42:26,515 - INFO - Waiting for application startup.
+2025-02-25 09:42:26,515 - INFO - Application startup complete.
+2025-02-25 09:45:13,306 - WARNING - Compiled the loaded model, but the compiled metrics have yet to be built. `model.compile_metrics` will be empty until you train or evaluate the model.
+2025-02-25 09:45:28,409 - ERROR - Prediction and yield calculation failed.
+Traceback (most recent call last):
+  File "/app/./main.py", line 121, in predict_endpoint
+    df_yield, yield_file = calculate_pv_yield_past()
+NameError: name 'calculate_pv_yield_past' is not defined
+2025-02-25 09:46:32,874 - INFO - Shutting down
+2025-02-25 09:46:32,982 - INFO - Waiting for application shutdown.
+2025-02-25 09:46:32,984 - INFO - Application shutdown complete.
+2025-02-25 09:46:32,985 - INFO - Finished server process [12494]
+2025-02-25 09:46:35,061 - INFO - Started server process [24929]
+2025-02-25 09:46:35,061 - INFO - Waiting for application startup.
+2025-02-25 09:46:35,061 - INFO - Application startup complete.
+2025-02-25 09:48:21,721 - INFO - Shutting down
+2025-02-25 09:48:21,828 - INFO - Waiting for application shutdown.
+2025-02-25 09:48:21,830 - INFO - Application shutdown complete.
+2025-02-25 09:48:21,831 - INFO - Finished server process [24929]
+2025-02-25 09:48:23,947 - INFO - Started server process [24946]
+2025-02-25 09:48:23,947 - INFO - Waiting for application startup.
+2025-02-25 09:48:23,948 - INFO - Application startup complete.
+2025-02-25 09:48:26,106 - WARNING - Compiled the loaded model, but the compiled metrics have yet to be built. `model.compile_metrics` will be empty until you train or evaluate the model.
+2025-02-25 09:57:41,865 - INFO - Shutting down
+2025-02-25 09:57:41,969 - INFO - Waiting for application shutdown.
+2025-02-25 09:57:41,970 - INFO - Application shutdown complete.
+2025-02-25 09:57:41,971 - INFO - Finished server process [24946]
+2025-02-25 10:58:30,508 - INFO - Started server process [8]
+2025-02-25 10:58:30,510 - INFO - Waiting for application startup.
+2025-02-25 10:58:30,511 - INFO - Application startup complete.
+2025-02-25 11:01:26,497 - WARNING - You are saving your model as an HDF5 file via `model.save()` or `keras.saving.save_model(model)`. This file format is considered legacy. We recommend using instead the native Keras format, e.g. `model.save('my_model.keras')` or `keras.saving.save_model(model, 'my_model.keras')`. 
+2025-02-25 11:01:26,559 - INFO - Training completed successfully.
+2025-02-25 11:28:40,072 - WARNING - Compiled the loaded model, but the compiled metrics have yet to be built. `model.compile_metrics` will be empty until you train or evaluate the model.
+2025-02-25 11:41:06,646 - INFO - Shutting down
+2025-02-25 11:41:06,748 - INFO - Waiting for application shutdown.
+2025-02-25 11:41:06,748 - INFO - Application shutdown complete.
+2025-02-25 11:41:06,748 - INFO - Finished server process [8]
+2025-02-25 11:41:21,251 - INFO - Started server process [30075]
+2025-02-25 11:41:21,252 - INFO - Waiting for application startup.
+2025-02-25 11:41:21,252 - INFO - Application startup complete.
+2025-02-25 11:43:26,896 - INFO - Shutting down
+2025-02-25 11:43:26,997 - INFO - Waiting for application shutdown.
+2025-02-25 11:43:26,998 - INFO - Application shutdown complete.
+2025-02-25 11:43:26,998 - INFO - Finished server process [30075]
+2025-02-25 11:43:40,821 - INFO - Started server process [30204]
+2025-02-25 11:43:40,824 - INFO - Waiting for application startup.
+2025-02-25 11:43:40,825 - INFO - Application startup complete.
+2025-02-25 11:45:05,008 - INFO - Shutting down
+2025-02-25 11:45:05,109 - INFO - Waiting for application shutdown.
+2025-02-25 11:45:05,109 - INFO - Application shutdown complete.
+2025-02-25 11:45:05,110 - INFO - Finished server process [30204]
+2025-02-25 11:45:17,960 - INFO - Started server process [30333]
+2025-02-25 11:45:17,962 - INFO - Waiting for application startup.
+2025-02-25 11:45:17,964 - INFO - Application startup complete.
+2025-02-25 11:46:16,214 - INFO - Shutting down
+2025-02-25 11:46:16,315 - INFO - Waiting for application shutdown.
+2025-02-25 11:46:16,316 - INFO - Application shutdown complete.
+2025-02-25 11:46:16,316 - INFO - Finished server process [30333]
+2025-02-25 11:46:30,086 - INFO - Started server process [30462]
+2025-02-25 11:46:30,087 - INFO - Waiting for application startup.
+2025-02-25 11:46:30,087 - INFO - Application startup complete.
+2025-02-25 11:49:34,078 - INFO - Shutting down
+2025-02-25 11:49:34,179 - INFO - Waiting for application shutdown.
+2025-02-25 11:49:34,180 - INFO - Application shutdown complete.
+2025-02-25 11:49:34,180 - INFO - Finished server process [30462]
+2025-02-25 11:49:46,324 - INFO - Started server process [30591]
+2025-02-25 11:49:46,325 - INFO - Waiting for application startup.
+2025-02-25 11:49:46,326 - INFO - Application startup complete.
+2025-02-25 11:49:49,648 - INFO - Shutting down
+2025-02-25 11:49:49,749 - INFO - Waiting for application shutdown.
+2025-02-25 11:49:49,750 - INFO - Application shutdown complete.
+2025-02-25 11:49:49,750 - INFO - Finished server process [30591]
+2025-02-25 12:19:53,520 - INFO - Started server process [8]
+2025-02-25 12:19:53,524 - INFO - Waiting for application startup.
+2025-02-25 12:19:53,526 - INFO - Application startup complete.
+2025-02-25 12:20:49,181 - WARNING - You are saving your model as an HDF5 file via `model.save()` or `keras.saving.save_model(model)`. This file format is considered legacy. We recommend using instead the native Keras format, e.g. `model.save('my_model.keras')` or `keras.saving.save_model(model, 'my_model.keras')`. 
+2025-02-25 12:20:49,233 - INFO - Training completed successfully.
+2025-02-25 12:21:05,806 - WARNING - Compiled the loaded model, but the compiled metrics have yet to be built. `model.compile_metrics` will be empty until you train or evaluate the model.
+2025-02-25 12:24:13,449 - ERROR - Training failed.
+Traceback (most recent call last):
+  File "/app/./main.py", line 111, in train_endpoint
+    url, workspace_name, updated_layer_name_predictions, updated_layer_name_yield = upload_2_geoserver()
+  File "/app/./geoserver_integration.py", line 37, in upload_2_geoserver
+    config, task_id, user_id = load_config(INPUT_JSON_PATH)
+  File "/app/./geoserver_integration.py", line 31, in load_config
+    config = json.load(f)
+NameError: name 'json' is not defined
+2025-02-25 12:24:39,906 - INFO - Shutting down
+2025-02-25 12:24:40,007 - INFO - Waiting for application shutdown.
+2025-02-25 12:24:40,008 - INFO - Application shutdown complete.
+2025-02-25 12:24:40,008 - INFO - Finished server process [8]
+2025-02-25 12:25:32,082 - INFO - Started server process [8]
+2025-02-25 12:25:32,083 - INFO - Waiting for application startup.
+2025-02-25 12:25:32,084 - INFO - Application startup complete.
+2025-02-25 12:34:25,135 - INFO - Shutting down
+2025-02-25 12:34:25,236 - INFO - Waiting for application shutdown.
+2025-02-25 12:34:25,236 - INFO - Application shutdown complete.
+2025-02-25 12:34:25,237 - INFO - Finished server process [8]
+2025-02-25 12:34:44,105 - INFO - Started server process [8]
+2025-02-25 12:34:44,107 - INFO - Waiting for application startup.
+2025-02-25 12:34:44,108 - INFO - Application startup complete.
+2025-02-25 12:38:02,311 - INFO - Shutting down
+2025-02-25 12:38:02,412 - INFO - Waiting for application shutdown.
+2025-02-25 12:38:02,413 - INFO - Application shutdown complete.
+2025-02-25 12:38:02,413 - INFO - Finished server process [8]

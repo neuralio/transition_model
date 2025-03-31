@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<Indexer>
+    <coverages>
+        <coverage>
+            <schema name="annual_electricity_savings">
+                <attributes>the_geom:Polygon,imageindex:Integer,time:java.util.Date</attributes>
+            </schema>
+            <origName>annual_electricity_savings</origName>
+            <name>annual_electricity_savings</name>
+        </coverage>
+    </coverages>
+</Indexer>

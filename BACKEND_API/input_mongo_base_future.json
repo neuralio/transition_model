@@ -1,0 +1,30 @@
+{
+    "task_id": "67f1a5b6d9a3e5001c3e1856",
+    "user_id": "user_004",
+    "user_email": "user@example.com",
+    "model_type": "base_rl",
+    "model_parameters": {
+        "period": "future",
+        "scenario": 26,
+        "aoi": {
+            "type": "Feature",
+            "geometry": {
+                "type": "Polygon",
+                "coordinates": [
+                    [
+                        [23.7301, 37.9838],
+                        [23.7311, 37.9838],
+                        [23.7311, 37.9828],
+                        [23.7301, 37.9828],
+                        [23.7301, 37.9838]
+                    ]
+                ]
+            },
+            "properties": {
+                "name": "Athens Area"
+            }
+        }
+    },
+    "results": {},
+    "status": "ready"
+}

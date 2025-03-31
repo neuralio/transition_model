@@ -1,0 +1,51 @@
+{
+    "task_id": "87f1a5b6d9a3e5001c3e1367",
+    "user_id": "user_010",
+    "user_email": "user@example.com",
+    "model_type": "full1_rl",
+    "model_parameters": {
+        "period": "past",
+        "physis": {
+            "health_status": 0.95,
+            "labor_availability": 0.75
+        },
+        "emotion": {
+            "stress_level": 0.15,
+            "satisfaction": 0.85
+        },
+        "cognition": {
+            "policy_incentives": 0.65,
+            "information_access": 0.75
+        },
+        "social": {
+            "social_influence": 0.55,
+            "community_participation": 0.65
+        },
+        "scenario_params": {
+            "subsidy": 0.2,
+            "loan_interest_rate": 0.03,
+            "tax_incentive_rate": 0.15,
+            "social_prestige_weight": 0.25
+        },
+        "aoi": {
+            "type": "Feature",
+            "geometry": {
+                "type": "Polygon",
+                "coordinates": [
+                    [
+                        [23.7301, 37.9838],
+                        [23.7311, 37.9838],
+                        [23.7311, 37.9828],
+                        [23.7301, 37.9828],
+                        [23.7301, 37.9838]
+                    ]
+                ]
+            },
+            "properties": {
+                "name": "Athens Area"
+            }
+        }
+    },
+    "results": {},
+    "status": "ready"
+}

@@ -1,0 +1,34 @@
+{
+    "task_id": "65a2b8d7e4c3a2002b4f5678",
+    "user_id": "user_002",
+    "user_email": "user@example.com",
+    "model_type": "pv_suitability_future",
+    "model_parameters": {
+        "period": "future",
+        "proximity_to_powerlines": 0.1,
+        "road_network_accessibility": 0.1,
+        "area": 2.4,
+        "electricity_rate": 0.12,
+        "scenario": 26,
+        "aoi": {
+            "type": "Feature",
+            "geometry": {
+                "type": "Polygon",
+                "coordinates": [
+                    [
+                        [23.7301, 37.9838],
+                        [23.7311, 37.9838],
+                        [23.7311, 37.9828],
+                        [23.7301, 37.9828],
+                        [23.7301, 37.9838]
+                    ]
+                ]
+            },
+            "properties": {
+                "name": "Athens Area"
+            }
+        }
+    },
+    "results": {},
+    "status": "ready"
+}
