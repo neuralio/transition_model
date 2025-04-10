@@ -19,10 +19,10 @@ def upload_2_geoserver_full2_rl_future(agent_data_file):
     ###################
     
     # Define the GeoServer URL and authentication details
-    geoserver_url = '<geoserver_url:port>/geoserver/rest'  # Replace with your GeoServer URL
-    url = '<geoserver_url:port>/geoserver'
-    username = '<geoserver_username>'  # Replace with your GeoServer username
-    password = '<geoserver_password>'  # Replace with your GeoServer password
+    geoserver_url = 'http://159.69.72.104:8080/geoserver/rest'  # Replace with your GeoServer REST URL
+    url = 'http://159.69.72.104:8080/geoserver'
+    username = 'admin'  # Replace with your GeoServer username
+    password = '#OpForNeuralio2@!'  # Replace with your GeoServer password
     
     # Load configuration (if needed to get task_id and scenario)
     def load_config(config_path):
@@ -46,7 +46,7 @@ def upload_2_geoserver_full2_rl_future(agent_data_file):
     workspace_name = 'Land_Suitability'
     new_namespace_uri = 'Land_Suitability'
     store_name_predictions = f'FULL2_RL_RCP{scenario}_{task_id}_{user_id}'
-    file_path_predictions = f'/opt/geoserver_data/data/ESA-AGENTS/BACKEND_API/Demo_With_Geoserver/RESULTS_RL/FULL2_RL/{task_id}_{user_id}/agent_data_over_time.nc'
+    file_path_predictions = f'/opt/geoserver_data/data/ESA-AGENTS/BACKEND_API/Demo_With_Geoserver/RESULTS_RL/FULL2_RL/{task_id}_{user_id}/RCP{scenario}/agent_data_over_time.nc'
     upload_layer_name_predictions = f'decision'
     updated_layer_name_predictions = f'FULL2_RL_RCP{scenario}_{task_id}_{user_id}'
     
