@@ -22,6 +22,9 @@ from gymnasium import spaces
 from stable_baselines3 import PPO
 from stable_baselines3.common.env_checker import check_env
 
+from stable_baselines3.common.callbacks import EvalCallback, StopTrainingOnNoModelImprovement
+
+
 from mesa import Agent, Model
 from mesa.time import BaseScheduler
 from mesa.space import SingleGrid
@@ -53,9 +56,9 @@ def get_file_paths(scenario, past=False):
         return {
             "pv_suitability_file": os.path.join(PV_PAST, "PAST_PV_SUITABILITY_PREDICTIONS_UPDATED.csv"),
             "pv_yield_file": os.path.join(PV_PAST, "PAST_PV_YIELD.csv"),
-            "cs_wheat_file": os.path.join(WHEAT_PAST, "WHEAT_PAST_LUSA_PREDICTIONS.csv"),
+            "cs_wheat_file": os.path.join(WHEAT_PAST, "PAST_LUSA_PREDICTIONS.csv"),
             "cy_wheat_file": os.path.join(WHEAT_PAST, "AquaCrop_Results_PAST.csv"),
-            "cs_maize_file": os.path.join(MAIZE_PAST, "MAIZE_PAST_LUSA_PREDICTIONS.csv"),
+            "cs_maize_file": os.path.join(MAIZE_PAST, "PAST_LUSA_PREDICTIONS.csv"),
             "cy_maize_file": os.path.join(MAIZE_PAST, "AquaCrop_Results_PAST.csv"),
         }
     else:
@@ -266,9 +269,51 @@ def get_processing_stats():
         gpu_status = "CPU only"
     return cpu_usage, memory_usage, gpu_status
 
-def train_rl_model(env, scenario, results_subdir, learning_rate=0.0009809274356741915, batch_size=64, n_epochs=6):
-    print("Initializing PPO model...")
-    # Instantiate PPO without specifying a device.
+# def train_rl_model(env, scenario, results_subdir, learning_rate=0.0009809274356741915, batch_size=64, n_epochs=6):
+#     print("Initializing PPO model...")
+#     # Instantiate PPO without specifying a device.
+#     model = PPO(
+#         "MlpPolicy",
+#         env,
+#         verbose=1,
+#         learning_rate=learning_rate,
+#         batch_size=batch_size,
+#         n_epochs=n_epochs
+#     )
+
+#     print("Starting training...")
+#     start_time = time.time()
+#     model.learn(total_timesteps=5000)
+#     end_time = time.time()
+
+#     if scenario == "past":
+#         model_name = "past_ppo_mesa_model"
+#     else:
+#         model_name = f"RCP{scenario}_ppo_mesa_model"
+#     save_path = os.path.join(results_subdir, model_name)
+#     print(f"Saving model to {save_path}")
+#     model.save(save_path)
+
+#     training_time = end_time - start_time
+#     cpu_usage, memory_usage, gpu_status = get_processing_stats()
+
+#     print(f"Training Time: {training_time:.2f} seconds")
+#     print(f"CPU Usage: {cpu_usage}%")
+#     print(f"Memory Usage: {memory_usage}%")
+#     print(f"GPU Status: {gpu_status}")
+def train_rl_model(
+    env,
+    scenario,
+    results_subdir,
+    learning_rate=0.0009809274356741915,
+    batch_size=64,
+    n_epochs=6,
+    total_timesteps=5000,
+    eval_freq=1000,
+    patience=3,
+    min_delta=1e-2
+):
+    print("Initializing PPO model for past scenario...")
     model = PPO(
         "MlpPolicy",
         env,
@@ -278,43 +323,44 @@ def train_rl_model(env, scenario, results_subdir, learning_rate=0.00098092743567
         n_epochs=n_epochs
     )
 
-    print("Starting training...")
+    # separate eval env so we don't pollute training data
+    eval_env = MesaEnv(env_data=env.env_data, max_steps=env.max_steps)
+
+    # stop if no improvement ≥ min_delta for `patience` evals
+    stop_cb = StopTrainingOnNoModelImprovement(
+        max_no_improvement_evaluations=patience,
+        min_delta=min_delta,
+        verbose=1
+    )
+    eval_cb = EvalCallback(
+        eval_env,
+        callback_after_eval=stop_cb,
+        eval_freq=eval_freq,
+        best_model_save_path=None,
+        verbose=1
+    )
+
+    print("Starting training with early stopping (past)...")
     start_time = time.time()
-    model.learn(total_timesteps=5000)
+    model.learn(
+        total_timesteps=total_timesteps,
+        callback=eval_cb
+    )
     end_time = time.time()
 
-    if scenario == "past":
-        model_name = "past_ppo_mesa_model"
-    else:
-        model_name = f"RCP{scenario}_ppo_mesa_model"
+    # determine save name
+    model_name = "past_ppo_mesa_model"
     save_path = os.path.join(results_subdir, model_name)
     print(f"Saving model to {save_path}")
     model.save(save_path)
 
+    # log stats
     training_time = end_time - start_time
     cpu_usage, memory_usage, gpu_status = get_processing_stats()
-
-    print(f"Training Time: {training_time:.2f} seconds")
-    print(f"CPU Usage: {cpu_usage}%")
-    print(f"Memory Usage: {memory_usage}%")
-    print(f"GPU Status: {gpu_status}")
+    print(f"Training Time: {training_time:.2f}s, CPU: {cpu_usage}%, RAM: {memory_usage}%, {gpu_status}")
 
 
-# def test_check_env(scenario):
-#     file_paths = get_file_paths(scenario)
-#     PV_, PV_Yield_ = load_pv_data(file_paths["pv_suitability_file"], file_paths["pv_yield_file"])
-#     crop_suitability, crop_profit = load_crop_data(
-#         file_paths["cs_maize_file"],
-#         file_paths["cs_wheat_file"],
-#         file_paths["cy_maize_file"],
-#         file_paths["cy_wheat_file"]
-#     )
-#     env_data = merge_data(crop_suitability, PV_, PV_Yield_, crop_profit)
-#     aggregated_data = aggregate_data(env_data)
-#     env = MesaEnv(env_data=aggregated_data, max_steps=10)
-#     print("Checking environment compatibility with Gym API...")
-#     check_env(env, warn=True)
-#     print("Environment passed the check!")
+
 def test_check_env(scenario, past=False):
     file_paths = get_file_paths(scenario, past=past)
     PV_, PV_Yield_ = load_pv_data(file_paths["pv_suitability_file"], file_paths["pv_yield_file"])

@@ -39,6 +39,8 @@ from stable_baselines3 import PPO
 from stable_baselines3.common.env_checker import check_env
 from stable_baselines3.common.callbacks import BaseCallback
 
+from stable_baselines3.common.callbacks import EvalCallback, StopTrainingOnNoModelImprovement, CallbackList
+
 # ---------------------------
 # Embedded Model Code
 # ---------------------------
@@ -645,81 +647,83 @@ DEFAULT_SCENARIO_PARAMS = {
     "social_prestige_weight": 0.0
 }
 
+
+import os
+import time
+import logging
+import psutil
+import pandas as pd
+from stable_baselines3 import PPO
+from stable_baselines3.common.callbacks import BaseCallback
+from stable_baselines3.common.env_checker import check_env
+
+# ... your other imports and DEFAULT_* definitions ...
+
+class EarlyStoppingCallback(BaseCallback):
+    """
+    Stops training when the evaluation reward has not improved by at least min_delta
+    for patience consecutive evaluations.
+    """
+    def __init__(self, eval_env, eval_freq: int, patience: int, min_delta: float = 0.0, verbose: int = 1):
+        super().__init__(verbose)
+        self.eval_env = eval_env
+        self.eval_freq = eval_freq
+        self.patience = patience
+        self.min_delta = min_delta
+        self.best_mean_reward = -float("inf")
+        self.no_improvement_evals = 0
+
+    def _on_step(self) -> bool:
+        # each call is one rollout step
+        if self.n_calls % self.eval_freq == 0:
+            # run one deterministic episode on eval_env
+            obs, _ = self.eval_env.reset()
+            done = False
+            truncated = False
+            total_reward = 0.0
+            while not done and not truncated:
+                action, _ = self.model.predict(obs, deterministic=True)
+                obs, reward, done, truncated, _ = self.eval_env.step(action)
+                total_reward += reward
+
+            if self.verbose > 0:
+                logging.info(f"Eval at step {self.num_timesteps}: reward={total_reward:.3f}")
+
+            # check improvement
+            if total_reward > self.best_mean_reward + self.min_delta:
+                self.best_mean_reward = total_reward
+                self.no_improvement_evals = 0
+            else:
+                self.no_improvement_evals += 1
+
+            if self.no_improvement_evals >= self.patience:
+                if self.verbose > 0:
+                    logging.info("Stopping training early (no improvement).")
+                return False  # returning False stops training
+
+        return True  # continue training
+
 def train_and_simulate(config):
-    """
-    Extract parameters from the configuration and run both training and simulation.
-    Reads the modified PECS parameters, scenario parameters, initial subsidy fund,
-    and climate losses from the config.
-    """
-    # Use defensive get to retrieve model_parameters.
-    model_params = config.get("model_parameters", {})
-    period = model_params.get("period", "future")
-    if period.lower() != "future":
-        logging.error("This script is configured for future scenarios only.")
-        return
+    # ... (same config unpacking & env creation as before) ...
 
-    # Retrieve scenario and parameters with defaults.
-    scenario = model_params.get("scenario", 26)
-    pecs_params = {
-        "physis": model_params.get("physis", DEFAULT_PECS_PARAMS["physis"]),
-        "emotion": model_params.get("emotion", DEFAULT_PECS_PARAMS["emotion"]),
-        "cognition": model_params.get("cognition", DEFAULT_PECS_PARAMS["cognition"]),
-        "social": model_params.get("social", DEFAULT_PECS_PARAMS["social"])
-    }
-    scenario_params = model_params.get("scenario_params", DEFAULT_SCENARIO_PARAMS)
-    initial_subsidy_fund = model_params.get("initial_subsidy_fund", 1.0)
-    climate_losses = model_params.get("climate_losses", {})
-
-    # Validate that all PECS parameter values are between 0 and 1.
-    for cat, params in pecs_params.items():
-        for key, value in params.items():
-            if not (0.0 <= value <= 1.0):
-                raise ValueError(f"PECS parameter '{cat}.{key}' must be between 0 and 1. Received: {value}")
-
-    # Use task_id and user_id from config (or default if missing).
-    task_id = config.get("task_id", "default_task")
-    user_id = config.get("user_id", "default_user")
-    results_task_dir = os.path.join(RESULTS_DIR, f"{task_id}_{user_id}")
-    os.makedirs(results_task_dir, exist_ok=True)
-
-    # Create a scenario-specific subdirectory.
-    scenario_name = f"RCP{scenario}"
-    scenario_output_dir = os.path.join(results_task_dir, scenario_name)
-    os.makedirs(scenario_output_dir, exist_ok=True)
-
-    # Create aggregated environmental data (for future scenario).
-    aggregated_data = create_aggregated_data(scenario, MAIN_DIR, scenario_output_dir)
-    if aggregated_data is None:
-        print("Data aggregation failed. Exiting.")
-        return
-
-    # Set up the simulation environment.
-    width = 10
-    height = 10
-    env = MesaEnv(
-        env_data=aggregated_data,
-        max_steps=10,
-        pecs_params=pecs_params,
-        width=width,
-        height=height,
-        scenario_params=scenario_params,
-        climate_losses=climate_losses
-    )
-
+    # after setting up env:
     try:
         check_env(env)
-        print("Environment passed the Gym API check.")
+        logging.info("Environment passed the Gym API check.")
     except Exception as e:
-        print(f"Environment check failed: {e}")
+        logging.error(f"Environment check failed: {e}")
         return
 
-    # Training parameters.
+    # Training parameters
     learning_rate = 0.0009809274356741915
     batch_size = 64
     n_epochs = 6
     total_timesteps = 5000
+    eval_freq = 1000
+    patience = 5
+    min_delta = 1e-2
 
-    # Define the PPO model with device selection for MPS (if available) or CPU.
+    # Define the PPO model
     ppo_model = PPO(
         'MlpPolicy',
         env,
@@ -730,68 +734,193 @@ def train_and_simulate(config):
         device="mps" if torch.backends.mps.is_available() else "cpu"
     )
 
-    logging.info(f"Starting training for {scenario_name} with PECS parameters: {pecs_params}")
+    logging.info(f"Starting training for {scenario_name} with early stopping.")
     start_time = time.time()
     env.reset()
-    ppo_model.learn(total_timesteps=total_timesteps, callback=PVAdoptionCallback())
+
+    # set up early stopping callback
+    # you may want a fresh copy of env for evaluation to avoid interfering
+    eval_env = MesaEnv(
+        env_data=aggregated_data,
+        max_steps=10,
+        pecs_params=pecs_params,
+        width=width,
+        height=height,
+        scenario_params=scenario_params,
+        climate_losses=climate_losses
+    )
+    early_stop_cb = EarlyStoppingCallback(
+        eval_env=eval_env,
+        eval_freq=eval_freq,
+        patience=patience,
+        min_delta=min_delta,
+        verbose=1
+    )
+    # optional: keep your PVAdoptionCallback as well
+    from full2_RL_future import PVAdoptionCallback
+    callbacks = [PVAdoptionCallback(), early_stop_cb]
+
+    ppo_model.learn(
+        total_timesteps=total_timesteps,
+        callback=callbacks
+    )
     env.close()
     end_time = time.time()
-    training_time = end_time - start_time
-    cpu_usage = psutil.cpu_percent(interval=1)
-    memory_usage = psutil.virtual_memory().percent
-    gpu_status = "Using Apple's MPS GPU" if torch.backends.mps.is_available() else "GPU not available"
-    logging.info(f"Training Time: {training_time:.2f} seconds, CPU: {cpu_usage}%, Memory: {memory_usage}%, GPU: {gpu_status}")
-    logging.info("Training completed successfully.")
 
-    # Save the trained model and parameters.
-    trained_models_dir = os.path.join(scenario_output_dir, "trained_models")
-    os.makedirs(trained_models_dir, exist_ok=True)
-    model_path = os.path.join(trained_models_dir, f"RCP{scenario}_ppo_mesa_model.zip")
+
+def train_and_simulate(config):
+    """
+    Extract parameters from the configuration and run both training and simulation,
+    with early stopping.
+    """
+    # 1) unpack config
+    model_params = config.get("model_parameters", {})
+    period = model_params.get("period", "future")
+    if period.lower() != "future":
+        logging.error("This script is configured for future scenarios only.")
+        return
+
+    scenario = model_params.get("scenario", 26)
+    pecs_params = {
+        "physis": model_params.get("physis", DEFAULT_PECS_PARAMS["physis"]),
+        "emotion": model_params.get("emotion", DEFAULT_PECS_PARAMS["emotion"]),
+        "cognition": model_params.get("cognition", DEFAULT_PECS_PARAMS["cognition"]),
+        "social": model_params.get("social", DEFAULT_PECS_PARAMS["social"])
+    }
+    scenario_params = model_params.get("scenario_params", DEFAULT_SCENARIO_PARAMS)
+    climate_losses = model_params.get("climate_losses", {})
+
+    # validate PECS
+    for cat, params in pecs_params.items():
+        for key, value in params.items():
+            if not (0.0 <= value <= 1.0):
+                raise ValueError(f"PECS parameter '{cat}.{key}' must be between 0 and 1. Received: {value}")
+
+    # prepare output dirs
+    task_id = config.get("task_id", "default_task")
+    user_id = config.get("user_id", "default_user")
+    results_task_dir = os.path.join(RESULTS_DIR, f"{task_id}_{user_id}")
+    os.makedirs(results_task_dir, exist_ok=True)
+    scenario_name = f"RCP{scenario}"
+    scenario_output_dir = os.path.join(results_task_dir, scenario_name)
+    os.makedirs(scenario_output_dir, exist_ok=True)
+
+    # aggregate data
+    aggregated_data = create_aggregated_data(scenario, MAIN_DIR, scenario_output_dir)
+    if aggregated_data is None:
+        logging.error("Data aggregation failed. Exiting.")
+        return
+
+    # build env
+    width, height = 10, 10
+    env = MesaEnv(
+        env_data=aggregated_data,
+        max_steps=10,
+        pecs_params=pecs_params,
+        width=width,
+        height=height,
+        scenario_params=scenario_params,
+        climate_losses=climate_losses
+    )
+    try:
+        check_env(env)
+        logging.info("Environment passed the Gym API check.")
+    except Exception as e:
+        logging.error(f"Environment check failed: {e}")
+        return
+
+    # training params
+    learning_rate = 0.0009809274356741915
+    batch_size = 64
+    n_epochs = 6
+    total_timesteps = 5000
+    eval_freq = 1000
+    patience = 5
+    min_delta = 1e-2
+
+    # instantiate model
+    ppo_model = PPO(
+        'MlpPolicy',
+        env,
+        verbose=1,
+        learning_rate=learning_rate,
+        batch_size=batch_size,
+        n_epochs=n_epochs,
+        device="mps" if torch.backends.mps.is_available() else "cpu"
+    )
+
+    logging.info(f"Starting training for RCP{scenario} with early stopping.")
+    start_time = time.time()
+    env.reset()
+
+    # prepare a fresh eval_env
+    eval_env = MesaEnv(
+        env_data=aggregated_data,
+        max_steps=10,
+        pecs_params=pecs_params,
+        width=width,
+        height=height,
+        scenario_params=scenario_params,
+        climate_losses=climate_losses
+    )
+    early_stop_cb = EarlyStoppingCallback(
+        eval_env=eval_env,
+        eval_freq=eval_freq,
+        patience=patience,
+        min_delta=min_delta,
+        verbose=1
+    )
+
+    # run training with both callbacks
+    ppo_model.learn(
+        total_timesteps=total_timesteps,
+        callback=[PVAdoptionCallback(), early_stop_cb]
+    )
+    env.close()
+    end_time = time.time()
+
+    # log training stats
+    training_time = end_time - start_time
+    cpu = psutil.cpu_percent(interval=1)
+    mem = psutil.virtual_memory().percent
+    gpu = "MPS" if torch.backends.mps.is_available() else "CPU"
+    logging.info(f"Training done in {training_time:.1f}s | CPU {cpu}% | Mem {mem}% | Device {gpu}")
+
+    # save model
+    trained_dir = os.path.join(scenario_output_dir, "trained_models")
+    os.makedirs(trained_dir, exist_ok=True)
+    model_path = os.path.join(trained_dir, f"RCP{scenario}_ppo_mesa_model.zip")
     ppo_model.save(model_path)
 
-    # ---- Now load the model from disk for simulation ----
-    logging.info("Loading trained model from disk for simulation.")
+    # reload for simulation
     ppo_model = PPO.load(model_path, env=env)
 
-    # Run simulation episodes to collect agent decisions.
-    num_episodes = 5
-    all_final_decisions = []
-    for episode in range(num_episodes):
-        print(f"Starting episode {episode + 1}")
-        obs, info = env.reset()
-        done = False
-        truncated = False
-        total_reward = 0.0
-        step = 0
+    # simulate and collect decisions
+    all_final = []
+    for ep in range(5):
+        logging.info(f"Simulation episode {ep+1}")
+        obs, _ = env.reset()
+        done = truncated = False
         while not done and not truncated:
-            action, _states = ppo_model.predict(obs, deterministic=True)
-            obs, reward, done, truncated, info = env.step(action)
-            total_reward += reward
-            step += 1
-        print(f"Episode {episode + 1} completed with total reward: {total_reward}")
-
-        # Collect decisions from each agent in the simulation.
+            action, _ = ppo_model.predict(obs, deterministic=True)
+            obs, _, done, truncated, _ = env.step(action)
         for agent in env.model.schedule.agents:
-            try:
-                all_final_decisions.append({
-                    'episode': episode + 1,
-                    'agent_id': agent.unique_id,
-                    'lat': agent.lat,
-                    'lon': agent.lon,
-                    'decision': getattr(agent, 'decision', None)
-                })
-            except AttributeError as e:
-                logging.error(f"Agent {agent.unique_id} missing 'decision': {e}")
+            all_final.append({
+                "episode": ep+1,
+                "agent_id": agent.unique_id,
+                "lat": agent.lat,
+                "lon": agent.lon,
+                "decision": agent.decision
+            })
 
-    if all_final_decisions:
-        decisions_df = pd.DataFrame(all_final_decisions)
-        decisions_output_file = os.path.join(scenario_output_dir, "agent_data_over_time.csv")
-        decisions_df.to_csv(decisions_output_file, index=False)
-        print(f"Final agent decisions saved to '{decisions_output_file}'.")
+    # save decisions
+    if all_final:
+        df = pd.DataFrame(all_final)
+        out_csv = os.path.join(scenario_output_dir, "agent_data_over_time.csv")
+        df.to_csv(out_csv, index=False)
+        logging.info(f"Saved decisions to {out_csv}")
     else:
-        print("Warning: No agent decisions were collected.")
-
-
+        logging.warning("No decisions collected.")
 
 def main():
     # Setup logging

@@ -40,6 +40,9 @@ from gymnasium import spaces
 from stable_baselines3 import PPO
 from stable_baselines3.common.env_checker import check_env
 
+from stable_baselines3.common.callbacks import EvalCallback, StopTrainingOnNoModelImprovement
+
+
 from mesa import Agent, Model
 from mesa.time import BaseScheduler
 from mesa.space import MultiGrid
@@ -462,9 +465,54 @@ def load_input_json(json_path):
 # --------------------------
 # Training and Simulation Functions
 # --------------------------
-def train_rl_phase(env, result_subdir, scenario, pecs_params, scenario_params,
-                   total_timesteps=5000, learning_rate=0.0009809274356741915, batch_size=64, n_epochs=6):
-    logging.info(f"Starting training for RCP{scenario} with PECS: {pecs_params} and scenario params: {scenario_params}")
+# def train_rl_phase(env, result_subdir, scenario, pecs_params, scenario_params,
+#                    total_timesteps=5000, learning_rate=0.0009809274356741915, batch_size=64, n_epochs=6):
+#     logging.info(f"Starting training for RCP{scenario} with PECS: {pecs_params} and scenario params: {scenario_params}")
+#     ppo_model = PPO(
+#         'MlpPolicy',
+#         env,
+#         verbose=1,
+#         learning_rate=learning_rate,
+#         batch_size=batch_size,
+#         n_epochs=n_epochs,
+#         device="mps" if torch.backends.mps.is_available() else "cpu"
+#     )
+#     start_time = time.time()
+#     ppo_model.learn(total_timesteps=total_timesteps)
+#     end_time = time.time()
+#     model_path = os.path.join(result_subdir, f"RCP{scenario}_ppo_mesa_model.zip")
+#     ppo_model.save(model_path)
+#     training_time = end_time - start_time
+#     cpu_usage = psutil.cpu_percent(interval=1)
+#     memory_usage = psutil.virtual_memory().percent
+#     gpu_status = "Using Apple's MPS GPU" if torch.backends.mps.is_available() else "GPU not available"
+#     logging.info(f"Training Time: {training_time:.2f} seconds, CPU: {cpu_usage}%, Memory: {memory_usage}%, GPU: {gpu_status}")
+#     logging.info("Training completed successfully.")
+#     return ppo_model, model_path
+
+def train_rl_phase(
+    env,
+    result_subdir,
+    scenario,
+    pecs_params,
+    scenario_params,
+    total_timesteps=5000,
+    learning_rate=0.0009809274356741915,
+    batch_size=64,
+    n_epochs=6,
+    eval_freq=1000,
+    patience=5,
+    min_delta=1e-2
+):
+    """
+    Train a PPO model with early stopping:
+    - run evaluation every `eval_freq` timesteps on a separate eval_env
+    - stop if mean reward fails to improve by ≥ min_delta for `patience` evals
+    """
+    logging.info(f"Starting training for RCP{scenario} with early stopping: "
+                 f"eval_freq={eval_freq}, patience={patience}, min_delta={min_delta}")
+
+    # instantiate model
     ppo_model = PPO(
         'MlpPolicy',
         env,
@@ -474,18 +522,55 @@ def train_rl_phase(env, result_subdir, scenario, pecs_params, scenario_params,
         n_epochs=n_epochs,
         device="mps" if torch.backends.mps.is_available() else "cpu"
     )
-    start_time = time.time()
-    ppo_model.learn(total_timesteps=total_timesteps)
-    end_time = time.time()
+
+    # build a separate eval environment (same config as train env)
+    eval_env = MesaEnv(
+        env_data=env.env_data,
+        max_steps=env.max_steps,
+        pecs_params=pecs_params,
+        scenario_params=scenario_params,
+        width=env.width,
+        height=env.height
+    )
+
+    # stop callback: no improvement of ≥ min_delta over `patience` evals
+    stop_cb = StopTrainingOnNoModelImprovement(
+        max_no_improvement_evaluations=patience,
+        min_delta=min_delta,
+        verbose=1
+    )
+
+    # evaluation callback
+    eval_cb = EvalCallback(
+        eval_env,
+        callback_after_eval=stop_cb,
+        eval_freq=eval_freq,
+        best_model_save_path=None,  # we’ll save manually at the end
+        verbose=1
+    )
+
+    # train with callback
+    start = time.time()
+    ppo_model.learn(
+        total_timesteps=total_timesteps,
+        callback=eval_cb
+    )
+    duration = time.time() - start
+    logging.info(f"Training completed in {duration:.1f}s")
+
+    # save final model
     model_path = os.path.join(result_subdir, f"RCP{scenario}_ppo_mesa_model.zip")
     ppo_model.save(model_path)
-    training_time = end_time - start_time
-    cpu_usage = psutil.cpu_percent(interval=1)
-    memory_usage = psutil.virtual_memory().percent
-    gpu_status = "Using Apple's MPS GPU" if torch.backends.mps.is_available() else "GPU not available"
-    logging.info(f"Training Time: {training_time:.2f} seconds, CPU: {cpu_usage}%, Memory: {memory_usage}%, GPU: {gpu_status}")
-    logging.info("Training completed successfully.")
+    logging.info(f"Saved trained model to {model_path}")
+
+    # report resource usage
+    cpu = psutil.cpu_percent(interval=1)
+    ram = psutil.virtual_memory().percent
+    gpu = "MPS" if torch.backends.mps.is_available() else "CPU"
+    logging.info(f"CPU: {cpu}%, RAM: {ram}%, Device: {gpu}")
+
     return ppo_model, model_path
+
 
 def simulation_rl_phase(ppo_model, env, result_subdir, num_episodes=5):
     all_final_decisions = []

@@ -1,5 +1,5 @@
 """
-pecs_RL_future.py
+pecs_RL_past.py
 
 This unified script combines the RL training and simulation execution for the PECS-based
 Mesa environment. It is designed to be called by an API endpoint.
@@ -35,6 +35,8 @@ from mesa.time import BaseScheduler
 from mesa.space import MultiGrid
 from stable_baselines3 import PPO
 from stable_baselines3.common.env_checker import check_env
+
+from stable_baselines3.common.callbacks import EvalCallback, StopTrainingOnNoModelImprovement
 
 # -----------------------------
 # Directory definitions
@@ -424,52 +426,99 @@ def get_processing_stats():
         gpu_status = "CPU only"
     return cpu_usage, memory_usage, gpu_status
 
-def train_rl_model(env, scenario_dir, scenario_str, learning_rate=0.00098, batch_size=64, n_epochs=6, total_timesteps=5000):
-    """Train a PPO model on the provided environment and save the model."""
+# def train_rl_model(env, scenario_dir, scenario_str, learning_rate=0.00098, batch_size=64, n_epochs=6, total_timesteps=5000):
+#     """Train a PPO model on the provided environment and save the model."""
+#     model = PPO(
+#         'MlpPolicy',
+#         env,
+#         verbose=1,
+#         learning_rate=learning_rate,
+#         batch_size=batch_size,
+#         n_epochs=n_epochs,
+#     )
+#     start_time = time.time()
+#     model.learn(total_timesteps=total_timesteps)
+#     end_time = time.time()
+#     model_path = os.path.join(scenario_dir, "past_ppo_mesa_model")
+#     model.save(model_path)
+#     training_time = end_time - start_time
+#     cpu_usage, memory_usage, gpu_status = get_processing_stats()
+#     logging.info(f"Training Time: {training_time:.2f} seconds")
+#     logging.info(f"CPU Usage: {cpu_usage}% | Memory Usage: {memory_usage}% | GPU Status: {gpu_status}")
+#     print(f"Training completed in {training_time:.2f} seconds")
+#     return model
+
+def train_rl_model(
+    env,
+    scenario_dir,
+    scenario_str,
+    learning_rate=0.00098,
+    batch_size=64,
+    n_epochs=6,
+    total_timesteps=5000,
+    eval_freq=1000,
+    patience=5,
+    min_delta=1e-2
+):
+    """
+    Train PPO with early stopping on past PECS RL.
+    - eval every `eval_freq` timesteps on a separate eval_env
+    - stop if no improvement ≥ min_delta for `patience` evals
+    """
+    print("Initializing PPO model for past scenario...")
     model = PPO(
-        'MlpPolicy',
+        "MlpPolicy",
         env,
         verbose=1,
         learning_rate=learning_rate,
         batch_size=batch_size,
         n_epochs=n_epochs,
     )
-    start_time = time.time()
-    model.learn(total_timesteps=total_timesteps)
-    end_time = time.time()
-    model_path = os.path.join(scenario_dir, "past_ppo_mesa_model")
+
+    # build a separate eval env so training vs eval stays clean
+    eval_env = MesaEnv(
+        env_data=env.env_data,
+        max_steps=env.max_steps,
+        pecs_params=env.pecs_params,
+        width=env.width,
+        height=env.height,
+    )
+
+    # early‐stop callback
+    stop_cb = StopTrainingOnNoModelImprovement(
+        max_no_improvement_evaluations=patience,
+        min_delta=min_delta,
+        verbose=1,
+    )
+    eval_cb = EvalCallback(
+        eval_env,
+        callback_after_eval=stop_cb,
+        eval_freq=eval_freq,
+        best_model_save_path=None,
+        verbose=1,
+    )
+
+    print("Starting training with early stopping (past)...")
+    start = time.time()
+    model.learn(
+        total_timesteps=total_timesteps,
+        callback=eval_cb,
+    )
+    duration = time.time() - start
+    print(f"Training finished in {duration:.2f} seconds")
+
+    # save final model
+    model_path = os.path.join(scenario_dir, f"{scenario_str}_ppo_mesa_model")
     model.save(model_path)
-    training_time = end_time - start_time
-    cpu_usage, memory_usage, gpu_status = get_processing_stats()
-    logging.info(f"Training Time: {training_time:.2f} seconds")
-    logging.info(f"CPU Usage: {cpu_usage}% | Memory Usage: {memory_usage}% | GPU Status: {gpu_status}")
-    print(f"Training completed in {training_time:.2f} seconds")
+    print(f"Saved model to {model_path}")
+
+    # log resource usage
+    cpu, ram, gpu = get_processing_stats()
+    print(f"CPU: {cpu}%, RAM: {ram}%, Device: {gpu}")
+
     return model
 
-# def run_simulation(env, model, scenario_dir, num_episodes=5):
-#     """Run simulation episodes using the trained model and save final agent decisions."""
-#     all_final_decisions = []
-#     for episode in range(num_episodes):
-#         obs, _ = env.reset()
-#         done = False
-#         total_reward, step = 0.0, 0
-#         while not done:
-#             action, _ = model.predict(obs, deterministic=True)
-#             obs, reward, done, _, _ = env.step(action)
-#             total_reward += reward
-#             step += 1
-#         episode_decisions = [
-#             {'episode': episode + 1, 'agent_id': agent.unique_id, 'decision': agent.decision}
-#             for agent in env.model.schedule.agents
-#         ]
-#         all_final_decisions.extend(episode_decisions)
-#         logging.info(f"Episode {episode+1}: Total Reward = {total_reward:.2f}, Steps = {step}")
-#         print(f"Episode {episode+1}: Total Reward = {total_reward:.2f}, Steps = {step}")
-    
-#     decisions_df = pd.DataFrame(all_final_decisions)
-#     decisions_file = os.path.join(scenario_dir, "agent_data_over_time.csv")
-#     decisions_df.to_csv(decisions_file, index=False)
-#     logging.info(f"Final agent decisions saved to {decisions_file}")
+
 def run_simulation(env, model, scenario_dir, num_episodes=5):
     all_agent_data = []
     for episode in range(num_episodes):

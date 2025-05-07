@@ -22,6 +22,8 @@ from gymnasium import spaces
 from stable_baselines3 import PPO
 from stable_baselines3.common.env_checker import check_env
 
+from stable_baselines3.common.callbacks import EvalCallback, StopTrainingOnNoModelImprovement
+
 from mesa import Agent, Model
 from mesa.time import BaseScheduler
 from mesa.space import SingleGrid
@@ -266,9 +268,48 @@ def get_processing_stats():
         gpu_status = "CPU only"
     return cpu_usage, memory_usage, gpu_status
 
-def train_rl_model(env, scenario, results_subdir, learning_rate=0.0009809274356741915, batch_size=64, n_epochs=6):
+# def train_rl_model(env, scenario, results_subdir, learning_rate=0.0009809274356741915, batch_size=64, n_epochs=6):
+#     print("Initializing PPO model...")
+#     # Instantiate PPO without specifying a device.
+#     model = PPO(
+#         "MlpPolicy",
+#         env,
+#         verbose=1,
+#         learning_rate=learning_rate,
+#         batch_size=batch_size,
+#         n_epochs=n_epochs
+#     )
+
+#     print("Starting training...")
+#     start_time = time.time()
+#     model.learn(total_timesteps=5000)
+#     end_time = time.time()
+
+#     # Save the model in the provided results subdirectory.
+#     save_path = os.path.join(results_subdir, f"RCP{scenario}_ppo_mesa_model")
+#     print(f"Saving model to {save_path}")
+#     model.save(save_path)
+
+#     training_time = end_time - start_time
+#     cpu_usage, memory_usage, gpu_status = get_processing_stats()
+
+#     print(f"Training Time: {training_time:.2f} seconds")
+#     print(f"CPU Usage: {cpu_usage}%")
+#     print(f"Memory Usage: {memory_usage}%")
+#     print(f"GPU Status: {gpu_status}")
+def train_rl_model(
+    env,
+    scenario,
+    results_subdir,
+    learning_rate=0.0009809274356741915,
+    batch_size=64,
+    n_epochs=6,
+    total_timesteps=5000,
+    eval_freq=1000,
+    patience=5,
+    min_delta=1e-2
+):
     print("Initializing PPO model...")
-    # Instantiate PPO without specifying a device.
     model = PPO(
         "MlpPolicy",
         env,
@@ -278,19 +319,39 @@ def train_rl_model(env, scenario, results_subdir, learning_rate=0.00098092743567
         n_epochs=n_epochs
     )
 
-    print("Starting training...")
+    # Create a separate eval env so evaluation episodes don't interfere with training
+    eval_env = MesaEnv(env_data=env.env_data, max_steps=env.max_steps)
+
+    # Stop if no mean‐reward improvement of at least min_delta over `patience` evals
+    stop_cb = StopTrainingOnNoModelImprovement(
+        max_no_improvement_evaluations=patience,
+        min_delta=min_delta,
+        verbose=1
+    )
+    eval_cb = EvalCallback(
+        eval_env,
+        callback_after_eval=stop_cb,
+        eval_freq=eval_freq,
+        best_model_save_path=None,
+        verbose=1
+    )
+
+    print("Starting training with early stopping...")
     start_time = time.time()
-    model.learn(total_timesteps=5000)
+    model.learn(
+        total_timesteps=total_timesteps,
+        callback=eval_cb
+    )
     end_time = time.time()
 
-    # Save the model in the provided results subdirectory.
+    # Save final model
     save_path = os.path.join(results_subdir, f"RCP{scenario}_ppo_mesa_model")
     print(f"Saving model to {save_path}")
     model.save(save_path)
 
+    # Log stats
     training_time = end_time - start_time
     cpu_usage, memory_usage, gpu_status = get_processing_stats()
-
     print(f"Training Time: {training_time:.2f} seconds")
     print(f"CPU Usage: {cpu_usage}%")
     print(f"Memory Usage: {memory_usage}%")

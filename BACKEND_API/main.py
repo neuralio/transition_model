@@ -57,90 +57,113 @@ from pv_module_future import (
     SLOPE_DIR  # ADD THIS LINE
 )
 
+# ─────────────────────────────────────────────────────────────
+#  BASE RL FUTURE (no name collisions)
+# ─────────────────────────────────────────────────────────────
 from base_RL_future import (
-    test_check_env,
-    train_rl_model,
-    evaluate_model,  
-    get_file_paths,
-    load_pv_data,
-    load_crop_data,
-    merge_data,
-    aggregate_data,
-    MesaEnv,
-    RESULTS_DIR
+    test_check_env as base_future_test_check_env,
+    train_rl_model as base_future_train_rl_model,
+    evaluate_model as base_future_evaluate_model,
+    get_file_paths as base_future_get_file_paths,
+    load_pv_data   as base_future_load_pv_data,
+    load_crop_data as base_future_load_crop_data,
+    merge_data as base_future_merge_data,
+    aggregate_data as base_future_aggregate_data,
+    MesaEnv as BaseFutureEnv,
+    RESULTS_DIR as BASE_FUTURE_RESULTS_DIR
 )
 
+# ─────────────────────────────────────────────────────────────
+#  BASE RL PAST
+# ─────────────────────────────────────────────────────────────
 from base_RL_past import (
-    test_check_env,
-    train_rl_model,
-    evaluate_model,
-    get_file_paths,
-    load_pv_data,
-    load_crop_data,
-    merge_data,
-    aggregate_data,
-    MesaEnv,
-    RESULTS_DIR
+    test_check_env as base_past_test_check_env,
+    train_rl_model as base_past_train_rl_model,
+    evaluate_model as base_past_evaluate_model,
+    get_file_paths as base_past_get_file_paths,
+    load_pv_data as base_past_load_pv_data,
+    load_crop_data as base_past_load_crop_data,
+    merge_data as base_past_merge_data,
+    aggregate_data as base_past_aggregate_data,
+    MesaEnv as BasePastEnv,
+    RESULTS_DIR as BASE_PAST_RESULTS_DIR
 )
 
+# ─────────────────────────────────────────────────────────────
+#  PECS RL FUTURE
+# ─────────────────────────────────────────────────────────────
 from pecs_RL_future import (
-    load_input_json,
-    get_pecs_params,
-    load_and_process_data,
-    train_rl_model,
-    run_simulation,
-    MesaEnv,
-    check_env,
-    RESULTS_DIR
+    load_input_json as pecs_future_load_input_json,
+    get_pecs_params as pecs_future_get_pecs_params,
+    load_and_process_data as pecs_future_load_and_process_data,
+    train_rl_model as pecs_future_train_rl_model,
+    run_simulation as pecs_future_run_simulation,
+    MesaEnv as PecsFutureEnv,
+    check_env as pecs_future_check_env,
+    RESULTS_DIR as PECS_FUTURE_RESULTS_DIR
 )
 
-
+# ─────────────────────────────────────────────────────────────
+#  PECS RL PAST
+# ─────────────────────────────────────────────────────────────
 from pecs_RL_past import (
-    load_input_json,
-    get_pecs_params,
-    load_and_process_data,
-    train_rl_model,
-    run_simulation,
-    MesaEnv,
-    check_env,
-    RESULTS_DIR
+    load_input_json as pecs_past_load_input_json,
+    get_pecs_params as pecs_past_get_pecs_params,
+    load_and_process_data as pecs_past_load_and_process_data,
+    train_rl_model as pecs_past_train_rl_model,
+    run_simulation as pecs_past_run_simulation,
+    MesaEnv as PecsPastEnv,
+    check_env as pecs_past_check_env,
+    RESULTS_DIR as PECS_PAST_RESULTS_DIR
 )
 
+# ─────────────────────────────────────────────────────────────
+#  FULL1 RL FUTURE
+# ─────────────────────────────────────────────────────────────
 from full1_RL_future import (
-    load_input_json,
-    create_aggregated_data,
-    MesaEnv,
-    check_env,
-    train_rl_phase,
-    simulation_rl_phase,
-    RESULTS_DIR, 
-    DEFAULT_PECS_PARAMS,
-    DEFAULT_SCENARIO_PARAMS
+    load_input_json as full1_future_load_input_json,
+    create_aggregated_data as full1_future_create_aggregated_data,
+    MesaEnv as Full1FutureEnv,
+    check_env as full1_future_check_env,
+    train_rl_phase as full1_future_train_rl_phase,
+    simulation_rl_phase as full1_future_simulation_rl_phase,
+    RESULTS_DIR as FULL1_FUTURE_RESULTS_DIR,
+    DEFAULT_PECS_PARAMS as FULL1_DEFAULT_PECS_PARAMS,
+    DEFAULT_SCENARIO_PARAMS as FULL1_DEFAULT_SCENARIO_PARAMS
 )
 
+
+# ─────────────────────────────────────────────────────────────
+#  FULL1 RL PAST
+# ─────────────────────────────────────────────────────────────
 from full1_RL_past import (
-    load_input_json,
-    create_aggregated_data,  
-    MesaEnv,
-    check_env,
-    train_rl_phase,
-    simulation_rl_phase,
-    RESULTS_DIR,
-    DEFAULT_PECS_PARAMS,
-    DEFAULT_SCENARIO_PARAMS,
-    cleanup_files
+    load_input_json as full1_past_load_input_json,
+    create_aggregated_data as full1_past_create_aggregated_data,
+    MesaEnv as Full1PastEnv,
+    check_env as full1_past_check_env,
+    train_rl_phase as full1_past_train_rl_phase,
+    simulation_rl_phase as full1_past_simulation_rl_phase,
+    RESULTS_DIR as FULL1_PAST_RESULTS_DIR,
+    DEFAULT_PECS_PARAMS as FULL1_PAST_DEFAULT_PECS_PARAMS,
+    DEFAULT_SCENARIO_PARAMS as FULL1_PAST_DEFAULT_SCENARIO_PARAMS,
+    cleanup_files as full1_past_cleanup_files
 )
 
 
+# ─────────────────────────────────────────────────────────────
+#  FULL2 RL FUTURE
+# ─────────────────────────────────────────────────────────────
 from full2_RL_future import (
-    load_config,
-    train_and_simulate,
-    INPUT_JSON_PATH,
-    MAIN_DIR,
-    RESULTS_DIR,
-    MesaEnv
+    load_config as full2_future_load_config,
+    train_and_simulate as full2_future_train_and_simulate,
+    INPUT_JSON_PATH as FULL2_INPUT_JSON_PATH,
+    MAIN_DIR as FULL2_MAIN_DIR,
+    RESULTS_DIR as FULL2_RESULTS_DIR,
+    MesaEnv as Full2FutureEnv,
+    create_aggregated_data   as full2_future_create_aggregated_data,
+    DEFAULT_PECS_PARAMS      as FULL2_DEFAULT_PECS_PARAMS,
+    DEFAULT_SCENARIO_PARAMS  as FULL2_DEFAULT_SCENARIO_PARAMS,
 )
-
 
 # ─────────────────────────────────────────────────────────────
 #  CONFIGURE SECURE LOGGING (OWASP-Compliant)
@@ -202,6 +225,21 @@ INPUT_JSON_PATH_FULL2_RL_FUTURE = os.path.join(MAIN_DIR, "input_mongo_full2_futu
 # ─────────────────────────────────────────────────────────────
 #  OWASP INPUT VALIDATION: Pydantic Models
 # ─────────────────────────────────────────────────────────────
+class TrainRequest(BaseModel):
+    config_path: constr(strip_whitespace=True, regex=r"^[a-zA-Z0-9_\-/]+\.json$")
+    data_path: constr(strip_whitespace=True, regex=r"^[a-zA-Z0-9_\-/]+\.csv$")
+
+
+class PredictRequest(BaseModel):
+    model_path: constr(strip_whitespace=True, regex=r"^[a-zA-Z0-9_\-/]+\.h5$") = os.path.join(TRAINING_DIR, "trained_model.h5")
+
+
+
+class GeoServerUpdateRequest(BaseModel):
+    workspace_name: constr(strip_whitespace=True, min_length=2, max_length=50)
+    updated_layer_name_predictions: constr(strip_whitespace=True, min_length=2, max_length=100)
+    updated_layer_name_yield: constr(strip_whitespace=True, min_length=2, max_length=100)
+
 
 class PvPastRequest(BaseModel):
     model_path: constr(strip_whitespace=True, regex=r"^[a-zA-Z0-9_\-/]+\.h5$") = os.path.join(TRAINING_DIR, "trained_model.h5")
@@ -301,6 +339,104 @@ async def validation_exception_handler(request: Request, exc: ValidationError):
     return JSONResponse(status_code=422, content={"detail": "Invalid input data. Please check your request format."})
 
 
+# ─────────────────────────────────────────────────────────────
+#  TRAIN ENDPOINT (Rate Limited to 2 requests per minute)
+# ─────────────────────────────────────────────────────────────
+@app.post("/train")
+@limiter.limit("2/minute")
+async def train_endpoint(request: Request, request_body: TrainRequest):
+    try:
+        config = load_config(request.config_path)
+        X_train, X_test, y_train, y_test = load_training_data(request.data_path)
+        model, history = train_model(X_train, y_train)
+        model.save(request.model_path)
+        logger.info("Training completed successfully.")
+        return {"status": "Training completed", "model_save_path": request.model_path, "history": history.history}
+    except Exception as e:
+        logger.error(f"Training Failed: {str(e)}", exc_info=True)
+        raise HTTPException(status_code=500, detail="Training process failed.")
+
+
+# ─────────────────────────────────────────────────────────────
+#  PREDICT ENDPOINT (Rate Limited to 5 requests per minute)
+# ─────────────────────────────────────────────────────────────
+@app.post("/predict")
+@limiter.limit("5/minute")
+async def predict_endpoint(request: Request, request_body: PredictRequest = PredictRequest()):
+    try:
+        model = tf.keras.models.load_model(request.model_path)
+        df_rsds_max = load_rsds_data()
+        df_rsds_min = load_rsds_data()
+        df_tas_mean = load_temperature_data()
+        df_slope = load_slope_data()
+
+        predictions_df, task_prediction_dir = predict_pv_suitability_past(
+            model, df_rsds_max, df_rsds_min, df_tas_mean, df_slope
+        )
+
+        updated_df = apply_conditions_to_predictions(
+            os.path.join(task_prediction_dir, "PAST_PV_SUITABILITY_PREDICTIONS.csv"),
+            task_prediction_dir
+        )
+
+        df_yield, yield_file = calculate_pv_yield_past()
+
+        return {
+            "status": "Prediction and yield calculation completed",
+            "predictions": updated_df.to_dict(orient="records"),
+            "yield_data": df_yield.to_dict(orient="records"),
+            "folder": task_prediction_dir
+        }
+
+    except Exception as e:
+        logger.error(f"Prediction Failed: {str(e)}", exc_info=True)
+        raise HTTPException(status_code=500, detail=str(e))
+
+
+# ─────────────────────────────────────────────────────────────------
+#  GEOSERVER UPDATE ENDPOINT (Rate Limited to 3 requests per minute)
+# ─────────────────────────────────────────────────────────────------
+@app.post("/geoserver_update")
+@limiter.limit("3/minute")
+async def geoserver_update(request: Request):
+    try:
+        # Upload data to GeoServer and retrieve updated layer info
+        url, workspace_name, updated_layer_name_predictions, updated_layer_name_yield = upload_2_geoserver()
+
+        # Prepare structured Geoserver data with WMS Legend URLs
+        geoserver_data = {
+            "PV Predictions Layer": f"{workspace_name}:{updated_layer_name_predictions}",
+            "PV Predictions Layer // URL": f"{url}/ows?service=WMS&version=1.3.0&request=GetLegendGraphic&format=image%2Fpng&width=20&height=20&layer={workspace_name}%3A{updated_layer_name_predictions}",
+            "PV Yield Layer": f"{workspace_name}:{updated_layer_name_yield}",
+            "PV Yield Layer // URL": f"{url}/ows?service=WMS&version=1.3.0&request=GetLegendGraphic&format=image%2Fpng&width=20&height=20&layer={workspace_name}%3A{updated_layer_name_yield}"
+        }
+
+        # Load existing JSON file securely
+        if os.path.exists(INPUT_JSON_PATH):
+            with open(INPUT_JSON_PATH, "r", encoding="utf-8") as file:
+                input_data = json.load(file)
+        else:
+            input_data = {}
+
+        # Ensure 'results' field exists and update it with new data
+        if "results" not in input_data:
+            input_data["results"] = {}
+
+        input_data["results"].update(geoserver_data)
+
+        # Save updated JSON file securely
+        with open(INPUT_JSON_PATH, "w", encoding="utf-8") as file:
+            json.dump(input_data, file, indent=4)
+
+        return {
+            "status": "Geoserver Update completed",
+            **geoserver_data
+        }
+
+    except Exception as e:
+        logger.error(f"Geoserver Update Failed: {str(e)}", exc_info=True)
+        raise HTTPException(status_code=500, detail="Geoserver update failed.")
+
 
 # ─────────────────────────────────────────────────────────────
 #  PV PAST ENDPOINT (Rate Limited to 2 requests per minute)
@@ -310,7 +446,10 @@ async def validation_exception_handler(request: Request, exc: ValidationError):
 async def pv_past(request: Request, request_body: PvPastRequest):
     try:
 
-        config, task_id, user_id = load_config(INPUT_JSON_PATH_PAST)
+        # config, task_id, user_id = load_config(INPUT_JSON_PATH_PAST)
+        config = load_config(INPUT_JSON_PATH_PAST)
+        task_id = config.get("task_id")
+        user_id = config.get("user_id")
 
         # 1️⃣ Train the model if it does not exist
         if not os.path.exists(request_body.model_path):  # ✅ Fix: Use request_body instead of request
@@ -355,12 +494,18 @@ async def pv_past(request: Request, request_body: PvPastRequest):
         url, workspace_name, updated_layer_name_predictions, updated_layer_name_yield = upload_2_geoserver_pv_past()
 
         # 8️⃣ Prepare structured Geoserver data with WMS Legend URLs
+        # geoserver_data = {
+        #     "type": "WMS",
+        #     "PV_Predictions_Layer": f"{workspace_name}:{updated_layer_name_predictions}",
+        #     "PV_Predictions_Layer // URL": f"{url}/ows?service=WMS&version=1.3.0&request=GetLegendGraphic&format=image%2Fpng&width=20&height=20&layer={workspace_name}%3A{updated_layer_name_predictions}",
+        #     "PV_Yield_Layer": f"{workspace_name}:{updated_layer_name_yield}",
+        #     "PV_Yield_Layer // URL": f"{url}/ows?service=WMS&version=1.3.0&request=GetLegendGraphic&format=image%2Fpng&width=20&height=20&layer={workspace_name}%3A{updated_layer_name_yield}"
+        # }
+
+
         geoserver_data = {
             "type": "WMS",
-            "PV_Predictions_Layer": f"{workspace_name}:{updated_layer_name_predictions}",
-            "PV_Predictions_Layer // URL": f"{url}/ows?service=WMS&version=1.3.0&request=GetLegendGraphic&format=image%2Fpng&width=20&height=20&layer={workspace_name}%3A{updated_layer_name_predictions}",
-            "PV_Yield_Layer": f"{workspace_name}:{updated_layer_name_yield}",
-            "PV_Yield_Layer // URL": f"{url}/ows?service=WMS&version=1.3.0&request=GetLegendGraphic&format=image%2Fpng&width=20&height=20&layer={workspace_name}%3A{updated_layer_name_yield}"
+            "layers": [f"{workspace_name}:{updated_layer_name_predictions}",f"{workspace_name}:{updated_layer_name_yield}"]
         }
 
         # 9️⃣ Load existing JSON file securely
@@ -383,9 +528,9 @@ async def pv_past(request: Request, request_body: PvPastRequest):
         # ✅ 10️⃣ Return a consolidated response
         return {
             "status": "PV Past workflow completed successfully.",
-            "train_status": train_status,
-            "predictions": updated_df.to_dict(orient="records"),
-            "yield_data": df_yield.to_dict(orient="records"),
+            # "train_status": train_status,
+            # "predictions": updated_df.to_dict(orient="records"),
+            # "yield_data": df_yield.to_dict(orient="records"),
             "geoserver_data": geoserver_data,
             "task_folder": task_prediction_dir  # Return task folder for reference
         }
@@ -402,8 +547,11 @@ async def pv_past(request: Request, request_body: PvPastRequest):
 @limiter.limit("2/minute")
 async def pv_future(request: Request, request_body: PvFutureRequest):
     try:
-        # 1.Load Configuration from JSON
-        config, task_id, user_id = load_config(INPUT_JSON_PATH_FUTURE)
+        
+        # config, task_id, user_id = load_config(INPUT_JSON_PATH_PAST)
+        config = load_config(INPUT_JSON_PATH_FUTURE)
+        task_id = config.get("task_id")
+        user_id = config.get("user_id")
 
         # Ensure scenario exists in the JSON
         if "scenario" not in config["model_parameters"]:
@@ -451,12 +599,18 @@ async def pv_future(request: Request, request_body: PvFutureRequest):
         url, workspace_name, updated_layer_name_predictions, updated_layer_name_yield = upload_2_geoserver_pv_future()
 
         # 10. Prepare Structured Geoserver Data with WMS Legend URLs
+        # geoserver_data = {
+        #     "type": "WMS",
+        #     "PV_Predictions_Layer": f"{workspace_name}:{updated_layer_name_predictions}",
+        #     "PV_Predictions_Layer // URL": f"{url}/ows?service=WMS&version=1.3.0&request=GetLegendGraphic&format=image%2Fpng&width=20&height=20&layer={workspace_name}%3A{updated_layer_name_predictions}",
+        #     "PV_Yield_Layer": f"{workspace_name}:{updated_layer_name_yield}",
+        #     "PV_Yield_Layer // URL": f"{url}/ows?service=WMS&version=1.3.0&request=GetLegendGraphic&format=image%2Fpng&width=20&height=20&layer={workspace_name}%3A{updated_layer_name_yield}"
+        # }
+
+
         geoserver_data = {
             "type": "WMS",
-            "PV_Predictions_Layer": f"{workspace_name}:{updated_layer_name_predictions}",
-            "PV_Predictions_Layer // URL": f"{url}/ows?service=WMS&version=1.3.0&request=GetLegendGraphic&format=image%2Fpng&width=20&height=20&layer={workspace_name}%3A{updated_layer_name_predictions}",
-            "PV_Yield_Layer": f"{workspace_name}:{updated_layer_name_yield}",
-            "PV_Yield_Layer // URL": f"{url}/ows?service=WMS&version=1.3.0&request=GetLegendGraphic&format=image%2Fpng&width=20&height=20&layer={workspace_name}%3A{updated_layer_name_yield}"
+            "layers": [f"{workspace_name}:{updated_layer_name_predictions}",f"{workspace_name}:{updated_layer_name_yield}"]
         }
 
         # 11. Load existing JSON file securely
@@ -479,9 +633,9 @@ async def pv_future(request: Request, request_body: PvFutureRequest):
         # Return Final Consolidated Response
         return {
             "status": f"PV Future workflow completed for RCP{scenario}.",
-            "train_status": train_status,
-            "predictions": updated_df.to_dict(orient="records"),
-            "yield_data": df_yield.to_dict(orient="records"),
+            # "train_status": train_status,
+            # "predictions": updated_df.to_dict(orient="records"),
+            # "yield_data": df_yield.to_dict(orient="records"),
             "geoserver_data": geoserver_data,
             "task_folder": task_prediction_dir  # Return task folder for reference
         }
@@ -519,12 +673,19 @@ async def crop_past(request: Request):
         updated_layer_name_predictions = f"Crop_Suitability_Predictions_Past_{crop_type}"
 
         # Construct the WMS URL
+        # geoserver_data = {
+        #     "type": "WMS",
+        #     "Crop_Predictions_Layer": f"{workspace_name}:{updated_layer_name_predictions}",
+        #     "Crop_Predictions_Layer // URL": f"{geoserver_url}/ows?service=WMS&version=1.3.0"
+        #                                       f"&request=GetLegendGraphic&format=image%2Fpng&width=20&height=20"
+        #                                       f"&layer={workspace_name}%3A{updated_layer_name_predictions}"
+        # }
+
+
+
         geoserver_data = {
             "type": "WMS",
-            "Crop_Predictions_Layer": f"{workspace_name}:{updated_layer_name_predictions}",
-            "Crop_Predictions_Layer // URL": f"{geoserver_url}/ows?service=WMS&version=1.3.0"
-                                              f"&request=GetLegendGraphic&format=image%2Fpng&width=20&height=20"
-                                              f"&layer={workspace_name}%3A{updated_layer_name_predictions}"
+            "layers": [f"{workspace_name}:{updated_layer_name_predictions}"]
         }
 
         # Ensure `results` field exists in JSON
@@ -579,12 +740,18 @@ async def crop_future(request: Request):
 
 
         # Construct the WMS URL
+        # geoserver_data = {
+        #     "type": "WMS",
+        #     "Crop_Predictions_Layer": f"{workspace_name}:{updated_layer_name_predictions}",
+        #     "Crop_Predictions_Layer // URL": f"{geoserver_url}/ows?service=WMS&version=1.3.0"
+        #                                       f"&request=GetLegendGraphic&format=image%2Fpng&width=20&height=20"
+        #                                       f"&layer={workspace_name}%3A{updated_layer_name_predictions}"
+        # }
+
+
         geoserver_data = {
             "type": "WMS",
-            "Crop_Predictions_Layer": f"{workspace_name}:{updated_layer_name_predictions}",
-            "Crop_Predictions_Layer // URL": f"{geoserver_url}/ows?service=WMS&version=1.3.0"
-                                              f"&request=GetLegendGraphic&format=image%2Fpng&width=20&height=20"
-                                              f"&layer={workspace_name}%3A{updated_layer_name_predictions}"
+            "layers": [f"{workspace_name}:{updated_layer_name_predictions}"]
         }
 
         # Ensure `results` field exists in JSON
@@ -612,79 +779,73 @@ async def crop_future(request: Request):
 @limiter.limit("2/minute")
 async def base_past_endpoint(request: Request):
     """
-    Endpoint for executing the BASE RL Past workflow.
-    This endpoint automatically performs an environment check, then either trains the model
-    (if not already trained) or directly evaluates it to produce the agent_data_over_time.csv.
-    It reads configuration from the fixed JSON file (INPUT_JSON_PATH_BASE_RL_PAST) to extract
-    task_id, user_id, and model parameters. The JSON must have "period" set to "past". If the
-    scenario is not provided, it defaults to "past". The workflow uses past data; the model is saved
-    as "past_ppo_mesa_model.zip" and all outputs are stored in a subdirectory (task_id_user_id) inside RESULTS_DIR.
+    Endpoint for executing the BASE RL Past workflow, using aliased imports
     """
     try:
-        # Read fixed JSON file and validate using the Pydantic model.
+        # Read and validate input JSON
         with open(INPUT_JSON_PATH_BASE_RL_PAST, "r") as f:
             input_data_raw = json.load(f)
         input_data = BaseRLInput(**input_data_raw)
-        
-        model_params = input_data.model_parameters
-        period = model_params.period.strip().lower()
-        if period != "past":
+
+        if input_data.model_parameters.period.strip().lower() != "past":
             raise Exception("This endpoint is only for past data (period must be 'past').")
-        # If scenario is not provided, default it to "past"
-        scenario = model_params.scenario if model_params.scenario is not None else "past"
-        
-        # Get task_id and user_id from the JSON.
+
         task_id = input_data.task_id
         user_id = input_data.user_id
         if not task_id or not user_id:
             raise Exception("The input JSON must contain both 'task_id' and 'user_id'.")
-        
-        # Create a subdirectory in RESULTS_DIR with the format task_id_user_id.
-        results_subdir = os.path.join(RESULTS_DIR, f"{task_id}_{user_id}")
+
+        # Create results directory
+        results_subdir = os.path.join(BASE_PAST_RESULTS_DIR, f"{task_id}_{user_id}")
         os.makedirs(results_subdir, exist_ok=True)
         logger.info(f"Results will be saved in: {results_subdir}")
-        
-        # Determine file paths for past data.
-        file_paths = get_file_paths(scenario=None, past=True)
-        
-        # Load necessary data.
-        PV_, PV_Yield_ = load_pv_data(file_paths["pv_suitability_file"], file_paths["pv_yield_file"])
-        crop_suitability, crop_profit = load_crop_data(
+
+        # Load and prepare data
+        file_paths = base_past_get_file_paths(scenario=None, past=True)
+        PV_, PV_Yield_ = base_past_load_pv_data(
+            file_paths["pv_suitability_file"],
+            file_paths["pv_yield_file"]
+        )
+        crop_suitability, crop_profit = base_past_load_crop_data(
             file_paths["cs_maize_file"],
             file_paths["cs_wheat_file"],
             file_paths["cy_maize_file"],
             file_paths["cy_wheat_file"]
         )
-        env_data = merge_data(crop_suitability, PV_, PV_Yield_, crop_profit)
-        aggregated_data = aggregate_data(env_data)
-        env = MesaEnv(env_data=aggregated_data, max_steps=10)
-        
-        # Run the environment check forcing past file paths.
-        test_check_env("past", past=True)
-        
-        # Define the expected model file path.
-        model_file = os.path.join(results_subdir, "past_ppo_mesa_model")
-        model_file_zip = model_file + ".zip"
-        
-        # Train the model only if it is not already trained.
+        env_data = base_past_merge_data(crop_suitability, PV_, PV_Yield_, crop_profit)
+        aggregated_data = base_past_aggregate_data(env_data)
+
+        # Instantiate environment and run checks
+        env = BasePastEnv(env_data=aggregated_data, max_steps=10)
+        base_past_test_check_env("past", past=True)
+
+        # Train if needed
+        model_file      = os.path.join(results_subdir, "past_ppo_mesa_model")
+        model_file_zip  = model_file + ".zip"
         if os.path.exists(model_file_zip):
             logger.info("Trained model already exists; skipping training step.")
         else:
-            train_rl_model(env, "past", results_subdir)
-        
-        # Evaluate the trained model to produce the agent_data_over_time.csv.
-        evaluate_model("past", env, results_subdir)
+            base_past_train_rl_model(env, "past", results_subdir)
+
+        # Evaluate
+        base_past_evaluate_model("past", env, results_subdir)
         
         # Upload Results to GeoServer.
         url, workspace_name, updated_layer_name_predictions = upload_2_geoserver_rl_past()
         
         # Prepare Structured Geoserver Data with WMS Legend URLs.
+        # geoserver_data = {
+        #     "type": "WMS",
+        #     "BASE_RL_Layer": f"{workspace_name}:{updated_layer_name_predictions}",
+        #     "BASE_RL_Layer // URL": f"{url}/ows?service=WMS&version=1.3.0&request=GetLegendGraphic&format=image%2Fpng&width=20&height=20&layer={workspace_name}%3A{updated_layer_name_predictions}"
+        # }
+
         geoserver_data = {
             "type": "WMS",
-            "BASE_RL_Layer": f"{workspace_name}:{updated_layer_name_predictions}",
-            "BASE_RL_Layer // URL": f"{url}/ows?service=WMS&version=1.3.0&request=GetLegendGraphic&format=image%2Fpng&width=20&height=20&layer={workspace_name}%3A{updated_layer_name_predictions}"
+            "layers": [f"{workspace_name}:{updated_layer_name_predictions}"]
         }
         
+
         # Load existing JSON file securely.
         if os.path.exists(INPUT_JSON_PATH_BASE_RL_PAST):
             with open(INPUT_JSON_PATH_BASE_RL_PAST, "r", encoding="utf-8") as file:
@@ -722,79 +883,72 @@ async def base_past_endpoint(request: Request):
 @limiter.limit("2/minute")
 async def base_future_endpoint(request: Request):
     """
-    Endpoint for executing the Base Future RL workflow.
-    This endpoint automatically performs an environment check and then trains the model.
-    It reads configuration from the fixed JSON file (INPUT_JSON_PATH_BASE_RL) to extract
-    scenario, period, task_id, and user_id. It then creates a results subdirectory with
-    the format task_id_user_id inside RESULTS_DIR, and executes the environment check
-    and training steps.
+    Endpoint for executing the Base Future RL workflow, using aliased imports
     """
     try:
-        # Read fixed JSON file and validate using the Pydantic model.
+        # Read and validate input JSON
         with open(INPUT_JSON_PATH_BASE_RL, "r") as f:
             input_data_raw = json.load(f)
         input_data = BaseRLInput(**input_data_raw)
-        
-        model_params = input_data.model_parameters
-        period = model_params.period
-        scenario = model_params.scenario
+
+        scenario = input_data.model_parameters.scenario
         if scenario is None:
             raise Exception("The input JSON must contain a 'scenario' in model_parameters.")
-        
-        # Get task_id and user_id from the JSON.
+
         task_id = input_data.task_id
         user_id = input_data.user_id
         if not task_id or not user_id:
             raise Exception("The input JSON must contain both 'task_id' and 'user_id'.")
-        
-        # Create a subdirectory in RESULTS_DIR with the format task_id_user_id.
-        results_subdir = os.path.join(RESULTS_DIR, f"{task_id}_{user_id}")
+
+        # Create results directory
+        results_subdir = os.path.join(BASE_FUTURE_RESULTS_DIR, f"{task_id}_{user_id}")
         os.makedirs(results_subdir, exist_ok=True)
         logger.info(f"Results will be saved in: {results_subdir}")
 
-        # Determine file paths always for future data.
-        file_paths = get_file_paths(scenario, past=False)
-
-        # Load necessary data.
-        PV_, PV_Yield_ = load_pv_data(file_paths["pv_suitability_file"], file_paths["pv_yield_file"])
-        crop_suitability, crop_profit = load_crop_data(
+        # Load and prepare data
+        file_paths = base_future_get_file_paths(scenario, past=False)
+        PV_, PV_Yield_ = base_future_load_pv_data(
+            file_paths["pv_suitability_file"],
+            file_paths["pv_yield_file"]
+        )
+        crop_suitability, crop_profit = base_future_load_crop_data(
             file_paths["cs_maize_file"],
             file_paths["cs_wheat_file"],
             file_paths["cy_maize_file"],
             file_paths["cy_wheat_file"]
         )
-        env_data = merge_data(crop_suitability, PV_, PV_Yield_, crop_profit)
-        aggregated_data = aggregate_data(env_data)
-        env = MesaEnv(env_data=aggregated_data, max_steps=10)
+        env_data = base_future_merge_data(crop_suitability, PV_, PV_Yield_, crop_profit)
+        aggregated_data = base_future_aggregate_data(env_data)
 
-        # Automatically run the environment check.
-        test_check_env(scenario)
+        # Instantiate environment and run checks
+        env = BaseFutureEnv(env_data=aggregated_data, max_steps=10)
+        base_future_test_check_env(scenario)
 
-        # # Train the RL model, saving results in the created subdirectory.
-        # train_rl_model(env, scenario, results_subdir)
-
-        # Define the expected model file path.
-        model_file = os.path.join(results_subdir, f"RCP{scenario}_ppo_mesa_model")
-        # Stable Baselines 3 appends ".zip" if no extension is provided.
-        model_file_zip = model_file + ".zip"
-
-        # Train the model only if it is not already trained.
+        # Train if needed
+        model_file      = os.path.join(results_subdir, f"RCP{scenario}_ppo_mesa_model")
+        model_file_zip  = model_file + ".zip"
         if os.path.exists(model_file_zip):
             logger.info("Trained model already exists; skipping training step.")
         else:
-            train_rl_model(env, scenario, results_subdir)
+            base_future_train_rl_model(env, scenario, results_subdir)
 
-        # Evaluate the trained model to produce the agent_data_over_time.csv.
-        evaluate_model(scenario, env, results_subdir)
+        # Evaluate
+        base_future_evaluate_model(scenario, env, results_subdir)
 
         # Upload Results to GeoServer
         url, workspace_name, updated_layer_name_predictions = upload_2_geoserver_rl_future()
 
         # Prepare Structured Geoserver Data with WMS Legend URLs
+        # geoserver_data = {
+        #     "type": "WMS",
+        #     "BASE_RL_Layer": f"{workspace_name}:{updated_layer_name_predictions}",
+        #     "BASE_RL_Layer // URL": f"{url}/ows?service=WMS&version=1.3.0&request=GetLegendGraphic&format=image%2Fpng&width=20&height=20&layer={workspace_name}%3A{updated_layer_name_predictions}"
+        # }
+
+
         geoserver_data = {
             "type": "WMS",
-            "BASE_RL_Layer": f"{workspace_name}:{updated_layer_name_predictions}",
-            "BASE_RL_Layer // URL": f"{url}/ows?service=WMS&version=1.3.0&request=GetLegendGraphic&format=image%2Fpng&width=20&height=20&layer={workspace_name}%3A{updated_layer_name_predictions}"
+            "layers": [f"{workspace_name}:{updated_layer_name_predictions}"]
         }
 
         # Load existing JSON file securely
@@ -831,53 +985,62 @@ async def base_future_endpoint(request: Request):
 @app.post("/pecs_past")
 @limiter.limit("2/minute")
 async def pecs_past_endpoint(request: Request):
+    """
+    Endpoint for executing the PECS RL Past workflow using aliased imports
+    """
     try:
-        # Load and validate the input JSON using the PecsRLPastInput model
-        input_data = load_input_json(INPUT_JSON_PATH_PECS_RL_PAST)
-        validated_input = PecsRLPastInput(**input_data)
+        # Load and validate the input JSON
+        input_data = pecs_past_load_input_json(INPUT_JSON_PATH_PECS_RL_PAST)
+        validated = PecsRLPastInput(**input_data)
 
-        # Explicitly validate period
-        period = validated_input.model_parameters.period.lower()
-        if period != "past":
-            raise HTTPException(status_code=400, detail=f"Invalid period '{period}'. Expected 'past'.")
+        # Ensure period is 'past'
+        if validated.model_parameters.period.lower() != "past":
+            raise HTTPException(status_code=400, detail="Period must be 'past' for this endpoint.")
 
-        # Extract task_id and user_id from validated input
-        task_id = validated_input.task_id
-        user_id = validated_input.user_id
-        results_subdir = os.path.join(RESULTS_DIR, f"{task_id}_{user_id}")
+        # Prepare results directory
+        task_id = validated.task_id
+        user_id = validated.user_id
+        results_subdir = os.path.join(PECS_PAST_RESULTS_DIR, f"{task_id}_{user_id}")
         os.makedirs(results_subdir, exist_ok=True)
 
-        # Extract PECS parameters (using defaults if missing)
-        pecs_params = get_pecs_params(input_data)
+        # Extract PECS params
+        pecs_params = pecs_past_get_pecs_params(input_data)
 
-        # Load and aggregate past environmental data
-        aggregated_data = load_and_process_data()
+        # Load and aggregate environment data
+        aggregated_data = pecs_past_load_and_process_data()
         if aggregated_data is None or aggregated_data.empty:
             raise Exception("Past environmental data could not be loaded or is empty.")
 
-        # Create the Mesa environment for past scenario
-        env = MesaEnv(env_data=aggregated_data, max_steps=10, pecs_params=pecs_params, width=10, height=10)
-        check_env(env)
+        # Create and check the environment
+        env = PecsPastEnv(env_data=aggregated_data, max_steps=10,
+                          pecs_params=pecs_params, width=10, height=10)
+        pecs_past_check_env(env)
 
-        # Determine model file path and train/load model
-        model_file = os.path.join(results_subdir, "past_ppo_mesa_model")
+        # Train or load model
+        model_file     = os.path.join(results_subdir, "past_ppo_mesa_model")
         model_file_zip = model_file + ".zip"
         if os.path.exists(model_file_zip):
-            logging.info("Trained model already exists; skipping training step.")
+            logger.info("Existing model found; skipping training.")
             model = PPO.load(model_file_zip, env=env)
         else:
-            model = train_rl_model(env, results_subdir, scenario_str="past")
+            model = pecs_past_train_rl_model(env, results_subdir, scenario_str="past")
 
-        # Run simulation episodes for past scenario
-        run_simulation(env, model, results_subdir, num_episodes=5)
+        # Run simulation
+        pecs_past_run_simulation(env, model, results_subdir, num_episodes=5)
 
         # Perform GeoServer integration specifically for PECS RL Past
         url, workspace_name, updated_layer_name_predictions = upload_2_geoserver_pecs_rl_past()
 
+        # geoserver_data = {
+        #     "type": "WMS",
+        #     "PECS_RL_Layer": f"{workspace_name}:{updated_layer_name_predictions}",
+        #     "PECS_RL_Layer // URL": f"{url}/ows?service=WMS&version=1.3.0&request=GetLegendGraphic&format=image%2Fpng&width=20&height=20&layer={workspace_name}%3A{updated_layer_name_predictions}"
+        # }
+
+
         geoserver_data = {
             "type": "WMS",
-            "PECS_RL_Layer": f"{workspace_name}:{updated_layer_name_predictions}",
-            "PECS_RL_Layer // URL": f"{url}/ows?service=WMS&version=1.3.0&request=GetLegendGraphic&format=image%2Fpng&width=20&height=20&layer={workspace_name}%3A{updated_layer_name_predictions}"
+            "layers": [f"{workspace_name}:{updated_layer_name_predictions}"]
         }
 
         # Update input JSON with geoserver data
@@ -904,56 +1067,65 @@ async def pecs_past_endpoint(request: Request):
 @app.post("/pecs_future")
 @limiter.limit("2/minute")
 async def pecs_future_endpoint(request: Request):
+    """
+    Endpoint for executing the PECS RL Future workflow using aliased imports
+    """
     try:
-        # Load input JSON for PECS RL Future
+        # Load and validate the input JSON
+        input_data = pecs_future_load_input_json(INPUT_JSON_PATH_PECS_RL_FUTURE)
+        validated = PecsRLFutureInput(**input_data)
 
-
-        # Load and validate the input JSON using the PecsRLFutureInput model
-        input_data = load_input_json(INPUT_JSON_PATH_PECS_RL_FUTURE)
-        validated_input = PecsRLFutureInput(**input_data)
-
-        # Extract validated parameters
-        scenario = validated_input.model_parameters.scenario
+        # Extract scenario
+        scenario = validated.model_parameters.scenario
         scenario_str = f"RCP{scenario}"
 
-        # Use the task_id and user_id from the validated input
-        task_id = validated_input.task_id
-        user_id = validated_input.user_id
-        results_subdir = os.path.join(RESULTS_DIR, f"{task_id}_{user_id}")
+        # Prepare results directory
+        task_id = validated.task_id
+        user_id = validated.user_id
+        results_subdir = os.path.join(PECS_FUTURE_RESULTS_DIR, f"{task_id}_{user_id}")
         os.makedirs(results_subdir, exist_ok=True)
-        
-        # Extract PECS parameters (using defaults if missing)
-        pecs_params = get_pecs_params(input_data)
-        
-        # Load and aggregate environmental data for the scenario
-        aggregated_data = load_and_process_data(scenario)
+
+        # Extract PECS params
+        pecs_params = pecs_future_get_pecs_params(input_data)
+
+        # Load and aggregate environment data
+        aggregated_data = pecs_future_load_and_process_data(scenario)
         if aggregated_data is None or aggregated_data.empty:
             raise Exception("Environmental data could not be loaded or is empty.")
-        
-        # Create the Mesa environment
-        env = MesaEnv(env_data=aggregated_data, max_steps=10, pecs_params=pecs_params, width=10, height=10)
-        check_env(env)
-        
-        # Determine model file path and train/load model
-        model_file = os.path.join(results_subdir, f"{scenario_str}_ppo_mesa_model")
+
+        # Create and check the environment
+        env = PecsFutureEnv(env_data=aggregated_data, max_steps=10,
+                            pecs_params=pecs_params, width=10, height=10)
+        pecs_future_check_env(env)
+
+        # Train or load model
+        model_file     = os.path.join(results_subdir, f"{scenario_str}_ppo_mesa_model")
         model_file_zip = model_file + ".zip"
         if os.path.exists(model_file_zip):
-            logging.info("Trained model already exists; skipping training step.")
+            logger.info("Existing model found; skipping training.")
             model = PPO.load(model_file_zip, env=env)
         else:
-            model = train_rl_model(env, results_subdir, scenario_str)
-        
-        # Run simulation episodes
-        run_simulation(env, model, results_subdir, num_episodes=5)
+            model = pecs_future_train_rl_model(env, results_subdir, scenario_str)
+
+        # Run simulation
+        pecs_future_run_simulation(env, model, results_subdir, num_episodes=5)
+
         
         # Perform GeoServer integration for PECS RL Future
         url, workspace_name, updated_layer_name_predictions = upload_2_geoserver_pecs_rl_future()
         
+        # geoserver_data = {
+        #     "type": "WMS",
+        #     "PECS_RL_Layer": f"{workspace_name}:{updated_layer_name_predictions}",
+        #     "PECS_RL_Layer // URL": f"{url}/ows?service=WMS&version=1.3.0&request=GetLegendGraphic&format=image%2Fpng&width=20&height=20&layer={workspace_name}%3A{updated_layer_name_predictions}"
+        # }
+
+
         geoserver_data = {
             "type": "WMS",
-            "PECS_RL_Layer": f"{workspace_name}:{updated_layer_name_predictions}",
-            "PECS_RL_Layer // URL": f"{url}/ows?service=WMS&version=1.3.0&request=GetLegendGraphic&format=image%2Fpng&width=20&height=20&layer={workspace_name}%3A{updated_layer_name_predictions}"
+            "layers": [f"{workspace_name}:{updated_layer_name_predictions}"]
         }
+
 
 
         # Update input JSON with geoserver data
@@ -975,191 +1147,206 @@ async def pecs_future_endpoint(request: Request):
 # FULL1 RL Past Endpoint
 # ─────────────────────────────────────────────────────────────
 @app.post("/full1_past")
+@limiter.limit("2/minute")
 async def full1_past_endpoint(request: Request):
+    """
+    Endpoint for executing the FULL1 RL Past workflow using aliased imports
+    """
     try:
-        raw_input_data = load_input_json(INPUT_JSON_PATH_FULL1_RL_PAST)
-        if not raw_input_data:
-            raise HTTPException(status_code=400, detail="Input JSON not found or invalid.")
-        
-        # Validate with our new Full1RLPastInput model
-        try:
-            input_data = Full1RLPastInput.parse_obj(raw_input_data)
-        except Exception as e:
-            raise HTTPException(status_code=422, detail=f"Input validation error: {e}")
-        
-        # Now proceed with your endpoint logic...
-        task_id = input_data.task_id
-        user_id = input_data.user_id
-        subdir_name = f"{task_id}_{user_id}"
-        result_subdir = os.path.join(RESULTS_DIR, subdir_name)
-        os.makedirs(result_subdir, exist_ok=True)
-        
-        # Set scenario string to "PAST"
-        scenario_str = "PAST"
-        
-        # Extract parameters (PECS and scenario-specific) from the validated data
-        model_params = input_data.model_parameters.dict()
+        # 1️⃣ Load & validate input JSON
+        raw_input_data = full1_past_load_input_json(INPUT_JSON_PATH_FULL1_RL_PAST)
+        validated = Full1RLPastInput.parse_obj(raw_input_data)
+
+        # 2️⃣ Prepare results directory
+        task_id = validated.task_id
+        user_id = validated.user_id
+        results_subdir = os.path.join(FULL1_PAST_RESULTS_DIR, f"{task_id}_{user_id}")
+        os.makedirs(results_subdir, exist_ok=True)
+
+        # 3️⃣ Build PECS + scenario params
+        mp = validated.model_parameters.dict()
         pecs_params = {
-            "physis": model_params.get("physis", DEFAULT_PECS_PARAMS["physis"]),
-            "emotion": model_params.get("emotion", DEFAULT_PECS_PARAMS["emotion"]),
-            "cognition": model_params.get("cognition", DEFAULT_PECS_PARAMS["cognition"]),
-            "social": model_params.get("social", DEFAULT_PECS_PARAMS["social"])
+            "physis":    mp.get("physis",    FULL1_PAST_DEFAULT_PECS_PARAMS["physis"]),
+            "emotion":   mp.get("emotion",   FULL1_PAST_DEFAULT_PECS_PARAMS["emotion"]),
+            "cognition": mp.get("cognition", FULL1_PAST_DEFAULT_PECS_PARAMS["cognition"]),
+            "social":    mp.get("social",    FULL1_PAST_DEFAULT_PECS_PARAMS["social"]),
         }
-        scenario_params = model_params.get("scenario_params", DEFAULT_SCENARIO_PARAMS)
-        
-        # Aggregate environmental data for past using a helper for past files.
-        aggregated_data = create_aggregated_data(scenario_str, MAIN_DIR, result_subdir)
-        if aggregated_data is None:
-            raise HTTPException(status_code=500, detail="Data aggregation failed.")
-        
-        # Create the Mesa environment.
-        width, height, max_steps = 10, 10, 10
-        env = MesaEnv(
+        scenario_params = mp.get("scenario_params", FULL1_PAST_DEFAULT_SCENARIO_PARAMS)
+        scenario_str = "PAST"
+
+        # 4️⃣ Aggregate data & instantiate environment
+        aggregated_data = full1_past_create_aggregated_data(scenario_str, MAIN_DIR, results_subdir)
+        env = Full1PastEnv(
             env_data=aggregated_data,
-            max_steps=max_steps,
+            max_steps=10,
             pecs_params=pecs_params,
             scenario_params=scenario_params,
-            width=width,
-            height=height
+            width=10,
+            height=10
         )
-        check_env(env)
-        
-        # Define model filename and path for past data.
-        model_path = os.path.join(result_subdir, "past_ppo_mesa_model.zip")
-        
-        # Training Phase: if the model file does not exist, train it; otherwise, load the pre-trained model.
+        full1_past_check_env(env)
+
+        # 5️⃣ Train or load model (with early stopping already wired into train_rl_phase)
+        model_path = os.path.join(results_subdir, "past_ppo_mesa_model.zip")
         if not os.path.exists(model_path):
-            ppo_model, model_path = train_rl_phase(env, result_subdir, scenario_str, pecs_params, scenario_params)
+            ppo_model, model_path = full1_past_train_rl_phase(
+                env,
+                results_subdir,
+                scenario_str,
+                pecs_params,
+                scenario_params,
+                eval_freq=1000,
+                patience=5,
+                min_delta=1e-2
+            )
         else:
             ppo_model = PPO.load(model_path, env=env)
-            logging.info(f"Loaded pre-trained model from {model_path}.")
-        
-        # Simulation Phase: Run simulation episodes and generate agent_data_over_time.csv.
-        agent_data_file = simulation_rl_phase(ppo_model, env, result_subdir, num_episodes=5)
-        
-        # GeoServer integration: call the full1 RL past integration function.
+
+        # 6️⃣ Run simulation
+        agent_data_file = full1_past_simulation_rl_phase(
+            ppo_model,
+            env,
+            results_subdir,
+            num_episodes=5
+        )
+
+        # 7️⃣ GeoServer integration
         url, workspace_name, updated_layer_name_predictions = upload_2_geoserver_full1_rl_past()
         geoserver_data = {
             "type": "WMS",
-            "Full1_RL_Past_Layer": f"{workspace_name}:{updated_layer_name_predictions}",
-            "Full1_RL_Past_Layer // URL": f"{url}/ows?service=WMS&version=1.3.0&request=GetLegendGraphic&format=image%2Fpng&width=20&height=20&layer={workspace_name}%3A{updated_layer_name_predictions}"
+            "layers": [f"{workspace_name}:{updated_layer_name_predictions}"]
         }
-        
-        # Optionally update the input JSON with GeoServer data.
+
+        # 8️⃣ Update input JSON with GeoServer results
         raw_input_data.setdefault("results", {})
         raw_input_data["results"].update(geoserver_data)
         with open(INPUT_JSON_PATH_FULL1_RL_PAST, "w", encoding="utf-8") as f:
             json.dump(raw_input_data, f, indent=4)
-        
+
+        # 9️⃣ Return consolidated response
         return JSONResponse(
             status_code=200,
             content={
                 "status": "Full1 Past workflow completed.",
                 "geoserver_data": geoserver_data,
-                "task_folder": result_subdir,
+                "task_folder": results_subdir,
                 "model_path": model_path,
                 "agent_data_file": agent_data_file
             }
         )
+
     except Exception as e:
-        logging.error(f"Full1 Past endpoint failed: {str(e)}", exc_info=True)
+        logging.error(f"Full1 Past endpoint failed: {e}", exc_info=True)
         raise HTTPException(status_code=500, detail="Full1 Past workflow failed.")
-
-
 
 # ─────────────────────────────────────────────────────────────
 # FULL1 RL Future Endpoint
 # ─────────────────────────────────────────────────────────────
 @app.post("/full1_future")
+@limiter.limit("2/minute")
 async def full1_future_endpoint(request: Request):
+    """
+    Endpoint for executing the FULL1 RL Future workflow using aliased imports.
+    """
     try:
-        # Load the raw input JSON configuration
-        raw_input_data = load_input_json(INPUT_JSON_PATH_FULL1_RL_FUTURE)
+        # 1️⃣ Load raw JSON so we can update it later
+        raw_input_data = full1_future_load_input_json(INPUT_JSON_PATH_FULL1_RL_FUTURE)
         if not raw_input_data:
             raise HTTPException(status_code=400, detail="Input JSON not found or invalid.")
 
-        # Validate the JSON data using the Full1RLFutureInput model
-        try:
-            input_data = Full1RLFutureInput.parse_obj(raw_input_data)
-        except Exception as e:
-            raise HTTPException(status_code=422, detail=f"Input validation error: {e}")
+        # 2️⃣ Validate
+        validated = Full1RLFutureInput.parse_obj(raw_input_data)
 
-        # Retrieve task_id and user_id for naming the results subdirectory.
-        task_id = input_data.task_id
-        user_id = input_data.user_id
-        subdir_name = f"{task_id}_{user_id}"
-        result_subdir = os.path.join(RESULTS_DIR, subdir_name)
-        os.makedirs(result_subdir, exist_ok=True)
+        # 3️⃣ Prepare results directory
+        task_id = validated.task_id
+        user_id = validated.user_id
+        results_subdir = os.path.join(FULL1_FUTURE_RESULTS_DIR, f"{task_id}_{user_id}")
+        os.makedirs(results_subdir, exist_ok=True)
 
-        # Extract model parameters (falling back to defaults if missing)
-        scenario = input_data.model_parameters.scenario
+        # 4️⃣ Extract PECS & scenario parameters
+        mp = validated.model_parameters.dict()
         pecs_params = {
-            "physis": input_data.model_parameters.dict().get("physis", DEFAULT_PECS_PARAMS["physis"]),
-            "emotion": input_data.model_parameters.dict().get("emotion", DEFAULT_PECS_PARAMS["emotion"]),
-            "cognition": input_data.model_parameters.dict().get("cognition", DEFAULT_PECS_PARAMS["cognition"]),
-            "social": input_data.model_parameters.dict().get("social", DEFAULT_PECS_PARAMS["social"])
+            "physis":    mp.get("physis",    FULL1_DEFAULT_PECS_PARAMS["physis"]),
+            "emotion":   mp.get("emotion",   FULL1_DEFAULT_PECS_PARAMS["emotion"]),
+            "cognition": mp.get("cognition", FULL1_DEFAULT_PECS_PARAMS["cognition"]),
+            "social":    mp.get("social",    FULL1_DEFAULT_PECS_PARAMS["social"]),
         }
-        # In case your input JSON contains a full "scenario_params" section:
-        scenario_params = input_data.model_parameters.dict().get("scenario_params", DEFAULT_SCENARIO_PARAMS)
+        scenario_params = mp.get("scenario_params", FULL1_DEFAULT_SCENARIO_PARAMS)
+        scenario = validated.model_parameters.scenario
+        scenario_str = f"RCP{scenario}"
 
-        # Aggregate environmental data for the given future scenario.
-        aggregated_data = create_aggregated_data(scenario, MAIN_DIR, result_subdir)
-        if aggregated_data is None:
+        # 5️⃣ Aggregate data
+        aggregated = full1_future_create_aggregated_data(scenario, MAIN_DIR, results_subdir)
+        if aggregated is None:
             raise HTTPException(status_code=500, detail="Data aggregation failed.")
 
-        # Create the Mesa environment.
-        width, height, max_steps = 10, 10, 10
-        env = MesaEnv(
-            env_data=aggregated_data,
-            max_steps=max_steps,
+        # 6️⃣ Instantiate & check environment
+        env = Full1FutureEnv(
+            env_data=aggregated,
+            max_steps=10,
             pecs_params=pecs_params,
             scenario_params=scenario_params,
-            width=width,
-            height=height
+            width=10,
+            height=10
         )
-        check_env(env)
+        full1_future_check_env(env)
 
-        # Define model filename and path.
-        model_filename = f"RCP{scenario}_ppo_mesa_model.zip"
-        model_path = os.path.join(result_subdir, model_filename)
-
-        # Training Phase: Train if model does not exist; otherwise, load the pre-trained model.
+        # 7️⃣ Train (with early stopping) or load existing model
+        model_path = os.path.join(results_subdir, f"{scenario_str}_ppo_mesa_model.zip")
         if not os.path.exists(model_path):
-            ppo_model, model_path = train_rl_phase(env, result_subdir, scenario, pecs_params, scenario_params)
+            ppo_model, model_path = full1_future_train_rl_phase(
+                env,
+                results_subdir,
+                scenario,
+                pecs_params,
+                scenario_params,
+                eval_freq=1000,
+                patience=5,
+                min_delta=1e-2
+            )
         else:
-            from stable_baselines3 import PPO  # Ensure PPO is imported
             ppo_model = PPO.load(model_path, env=env)
-            logging.info(f"Loaded pre-trained model from {model_path}.")
 
-        # Simulation Phase: Run simulation episodes and generate agent_data_over_time.csv.
-        agent_data_file = simulation_rl_phase(ppo_model, env, result_subdir, num_episodes=5)
+        # 8️⃣ Run simulation episodes
+        agent_data_file = full1_future_simulation_rl_phase(
+            ppo_model,
+            env,
+            results_subdir,
+            num_episodes=5
+        )
 
-        # GeoServer integration (using the same integration function as in the pecs_future endpoint)
+        # 9️⃣ GeoServer integration (using the same integration function as in the pecs_future endpoint)
         url, workspace_name, updated_layer_name_predictions = upload_2_geoserver_full1_rl_future()
+        # geoserver_data = {
+        #     "type": "WMS",
+        #     "Full1_RL_Layer": f"{workspace_name}:{updated_layer_name_predictions}",
+        #     "Full1_RL_Layer // URL": f"{url}/ows?service=WMS&version=1.3.0&request=GetLegendGraphic&format=image%2Fpng&width=20&height=20&layer={workspace_name}%3A{updated_layer_name_predictions}"
+        # }
         geoserver_data = {
             "type": "WMS",
-            "Full1_RL_Layer": f"{workspace_name}:{updated_layer_name_predictions}",
-            "Full1_RL_Layer // URL": f"{url}/ows?service=WMS&version=1.3.0&request=GetLegendGraphic&format=image%2Fpng&width=20&height=20&layer={workspace_name}%3A{updated_layer_name_predictions}"
+            "layers": [f"{workspace_name}:{updated_layer_name_predictions}"]
         }
 
-        # Optionally update the input JSON with geoserver data.
+        # 🔟 Update JSON with GeoServer results
         raw_input_data.setdefault("results", {})
         raw_input_data["results"].update(geoserver_data)
         with open(INPUT_JSON_PATH_FULL1_RL_FUTURE, "w", encoding="utf-8") as f:
             json.dump(raw_input_data, f, indent=4)
 
+        # ✅ Return consolidated response
         return JSONResponse(
             status_code=200,
             content={
-                "status": f"Full1 Future workflow completed for RCP{scenario}.",
-                "geoserver_data": geoserver_data,
-                "task_folder": result_subdir,
-                "model_path": model_path,
+                "status":          f"Full1 Future workflow completed for {scenario_str}.",
+                "geoserver_data":  geoserver_data,
+                "task_folder":     results_subdir,
+                "model_path":      model_path,
                 "agent_data_file": agent_data_file
             }
         )
+
     except Exception as e:
-        logging.error(f"Full1 Future endpoint failed: {str(e)}", exc_info=True)
+        logger.error(f"Full1 Future endpoint failed: {e}", exc_info=True)
         raise HTTPException(status_code=500, detail="Full1 Future workflow failed.")
 
 
@@ -1171,130 +1358,116 @@ async def full1_future_endpoint(request: Request):
 @limiter.limit("2/minute")
 async def full2_future_endpoint(request: Request):
     """
-    Full2 Future endpoint.
-    This endpoint loads configuration from the fixed full2 JSON file,
-    validates it using Full2RLFutureInput, checks if a pre-trained model exists;
-    if not, it trains and simulates the full2 RL pipeline. If the simulation output
-    (agent_data_over_time.csv) is already present, it skips re-aggregation and simulation
-    and continues with GeoServer integration.
+    FULL2 RL Future workflow with two-stage logic (train/simulate then manual simulation if needed)
     """
     try:
-        # Load and validate configuration using Full2RLFutureInput.
-        input_data = load_input_json(INPUT_JSON_PATH_FULL2_RL_FUTURE)
-        validated_input = Full2RLFutureInput(**input_data)
-        config = validated_input.dict()
-        
-        # Extract task and user information.
-        task_id = config.get("task_id", "default_task")
-        user_id = config.get("user_id", "default_user")
-        
-        # Create a dedicated results directory: RESULTS_DIR/FULL2_RL/task_id_user_id
-        results_task_dir = os.path.join(RESULTS_DIR, f"{task_id}_{user_id}")
+        # 1️⃣ Load & validate configuration
+        config_data = full2_future_load_config(FULL2_INPUT_JSON_PATH)
+        validated   = Full2RLFutureInput(**config_data)
+        config      = validated.dict()
+
+        # 2️⃣ Prepare results directories
+        task_id          = config.get("task_id", "default_task")
+        user_id          = config.get("user_id", "default_user")
+        results_task_dir = os.path.join(FULL2_RESULTS_DIR, f"{task_id}_{user_id}")
         os.makedirs(results_task_dir, exist_ok=True)
-        
-        # Get the scenario and form a scenario string.
-        scenario = str(config["model_parameters"].get("scenario", 26))
-        scenario_str = f"RCP{scenario}"
-        
-        # Create a scenario-specific subdirectory.
+
+        # 3️⃣ Scenario string and subdir
+        scenario      = str(config["model_parameters"]["scenario"])
+        scenario_str  = f"RCP{scenario}"
         scenario_output_dir = os.path.join(results_task_dir, scenario_str)
         os.makedirs(scenario_output_dir, exist_ok=True)
-        
-        # Set the paths for the model file and simulation output.
+
+        # 4️⃣ Paths for model & output CSV
         trained_models_dir = os.path.join(scenario_output_dir, "trained_models")
         os.makedirs(trained_models_dir, exist_ok=True)
-        # Save the model file without an extra ".zip" extension.
-        model_file = os.path.join(trained_models_dir, f"RCP{scenario}_ppo_mesa_model")
+        model_file      = os.path.join(trained_models_dir, f"{scenario_str}_ppo_mesa_model")
         agent_data_file = os.path.join(scenario_output_dir, "agent_data_over_time.csv")
-        
-        # If the model file doesn't exist, run training and simulation.
+
+        # 5️⃣ Train & simulate if model missing
         if not os.path.exists(model_file):
-            logging.info("Pre-trained model not found; starting training and simulation.")
-            train_and_simulate(config)
+            logger.info("No pre-trained model found; running train_and_simulate.")
+            full2_future_train_and_simulate(config)
         else:
-            logging.info("Pre-trained model found; skipping training phase.")
-        
-        # Check if simulation output already exists.
+            logger.info("Pre-trained model found; skipping train_and_simulate.")
+
+        # 6️⃣ If CSV still missing, run manual simulation
         if not os.path.exists(agent_data_file):
-            logging.info("Simulation output file not found; running simulation episodes.")
-            # Re-create the environment for simulation.
-            aggregated_data = create_aggregated_data(scenario, MAIN_DIR, scenario_output_dir)
-            if aggregated_data is None:
-                logging.error("Data aggregation failed. Exiting.")
-                return JSONResponse(status_code=500, content={"detail": "Data aggregation failed."})
-            
-            # Extract PECS and scenario parameters (using defaults if needed).
-            model_params = config.get("model_parameters", {})
-            pecs_params = {
-                "physis": model_params.get("physis", DEFAULT_PECS_PARAMS["physis"]),
-                "emotion": model_params.get("emotion", DEFAULT_PECS_PARAMS["emotion"]),
-                "cognition": model_params.get("cognition", DEFAULT_PECS_PARAMS["cognition"]),
-                "social": model_params.get("social", DEFAULT_PECS_PARAMS["social"])
-            }
-            scenario_params = model_params.get("scenario_params", DEFAULT_SCENARIO_PARAMS)
-            climate_losses = model_params.get("climate_losses", {})
-            
-            width, height, max_steps = 10, 10, 10
-            env = MesaEnv(
-                env_data=aggregated_data,
-                max_steps=max_steps,
-                pecs_params=pecs_params,
-                width=width,
-                height=height,
-                scenario_params=scenario_params,
-                climate_losses=climate_losses
+            logger.info("Simulation output missing; running manual simulation.")
+
+            # a) re-aggregate data
+            agg = full2_future_create_aggregated_data(
+                scenario, FULL2_MAIN_DIR, scenario_output_dir
             )
-            
-            # Load the pre-trained model.
-            logging.info("Loading pre-trained model from disk for simulation.")
+            if agg is None:
+                logger.error("Data aggregation failed.")
+                return JSONResponse(status_code=500, content={"detail": "Data aggregation failed."})
+
+            # b) extract PECS & scenario params
+            mp            = config["model_parameters"]
+            pecs_params   = {
+                k: mp.get(k, FULL2_DEFAULT_PECS_PARAMS[k])
+                for k in FULL2_DEFAULT_PECS_PARAMS
+            }
+            scenario_params = mp.get("scenario_params", FULL2_DEFAULT_SCENARIO_PARAMS)
+            climate_losses  = mp.get("climate_losses", {})
+
+            # c) instantiate env
+            env = Full2FutureEnv(
+                env_data=agg,
+                max_steps=10,
+                pecs_params=pecs_params,
+                scenario_params=scenario_params,
+                climate_losses=climate_losses,
+                width=10,
+                height=10
+            )
+
+            # d) load model & simulate episodes
             ppo_model = PPO.load(model_file, env=env)
-            
-            # Run simulation episodes.
-            num_episodes = 5
-            all_final_decisions = []
-            for episode in range(num_episodes):
-                print(f"Starting episode {episode + 1}")
-                obs, info = env.reset()
+            all_decisions = []
+            for ep in range(5):
+                obs, _ = env.reset()
                 done = False
                 truncated = False
-                total_reward = 0.0
-                step = 0
                 while not done and not truncated:
-                    action, _states = ppo_model.predict(obs, deterministic=True)
-                    obs, reward, done, truncated, info = env.step(action)
-                    total_reward += reward
-                    step += 1
-                print(f"Episode {episode + 1} completed with total reward: {total_reward}")
+                    action, _ = ppo_model.predict(obs, deterministic=True)
+                    obs, _, done, truncated, _ = env.step(action)
                 for agent in env.model.schedule.agents:
-                    try:
-                        all_final_decisions.append({
-                            'episode': episode + 1,
-                            'agent_id': agent.unique_id,
-                            'lat': agent.lat,
-                            'lon': agent.lon,
-                            'decision': getattr(agent, 'decision', None)
-                        })
-                    except AttributeError as e:
-                        logging.error(f"Agent {agent.unique_id} missing 'decision': {e}")
-            if all_final_decisions:
-                decisions_df = pd.DataFrame(all_final_decisions)
-                decisions_df.to_csv(agent_data_file, index=False)
-                print(f"Final agent decisions saved to '{agent_data_file}'.")
+                    all_decisions.append({
+                        "episode":   ep + 1,
+                        "agent_id":  agent.unique_id,
+                        "lat":       agent.lat,
+                        "lon":       agent.lon,
+                        "decision":  getattr(agent, "decision", None)
+                    })
+
+            # e) save CSV
+            if all_decisions:
+                import pandas as pd
+                pd.DataFrame(all_decisions).to_csv(agent_data_file, index=False)
+                logger.info(f"Saved manual simulation to {agent_data_file}")
             else:
-                logging.warning("No agent decisions were collected during simulation.")
-        else:
-            logging.info("Simulation output file exists; skipping simulation.")
+                logger.warning("No agent decisions collected during manual simulation.")
+
         
         # Perform GeoServer integration.
         url, workspace_name, updated_layer_name_predictions = upload_2_geoserver_full2_rl_future(agent_data_file)
+        # geoserver_data = {
+        #     "type": "WMS",
+        #     "Full2_RL_Layer": f"{workspace_name}:{updated_layer_name_predictions}",
+        #     "Full2_RL_Layer // URL": (
+        #         f"{url}/ows?service=WMS&version=1.3.0&request=GetLegendGraphic"
+        #         f"&format=image%2Fpng&width=20&height=20&layer={workspace_name}%3A{updated_layer_name_predictions}"
+        #     )
+        # }
+
+
         geoserver_data = {
             "type": "WMS",
-            "Full2_RL_Layer": f"{workspace_name}:{updated_layer_name_predictions}",
-            "Full2_RL_Layer // URL": (
-                f"{url}/ows?service=WMS&version=1.3.0&request=GetLegendGraphic"
-                f"&format=image%2Fpng&width=20&height=20&layer={workspace_name}%3A{updated_layer_name_predictions}"
-            )
+            "layers": [f"{workspace_name}:{updated_layer_name_predictions}"]
         }
+
         
         # Update the configuration JSON with GeoServer results.
         config.setdefault("results", {})

@@ -42,6 +42,9 @@ from gymnasium import spaces
 from stable_baselines3 import PPO
 from stable_baselines3.common.env_checker import check_env
 
+from stable_baselines3.common.callbacks import EvalCallback, StopTrainingOnNoModelImprovement
+
+
 from mesa import Agent, Model
 from mesa.time import BaseScheduler
 from mesa.space import MultiGrid
@@ -464,9 +467,54 @@ def load_input_json(json_path):
 # --------------------------
 # Training and Simulation Functions
 # --------------------------
+# def train_rl_phase(env, result_subdir, scenario_str, pecs_params, scenario_params,
+#                    total_timesteps=5000, learning_rate=0.0009809274356741915, batch_size=64, n_epochs=6):
+#     logging.info(f"Starting training for {scenario_str} data with PECS: {pecs_params} and scenario params: {scenario_params}")
+#     ppo_model = PPO(
+#         'MlpPolicy',
+#         env,
+#         verbose=1,
+#         learning_rate=learning_rate,
+#         batch_size=batch_size,
+#         n_epochs=n_epochs,
+#         device="mps" if torch.backends.mps.is_available() else "cpu"
+#     )
+#     start_time = time.time()
+#     ppo_model.learn(total_timesteps=total_timesteps)
+#     end_time = time.time()
+#     model_path = os.path.join(result_subdir, "past_ppo_mesa_model.zip")
+#     ppo_model.save(model_path)
+#     training_time = end_time - start_time
+#     cpu_usage = psutil.cpu_percent(interval=1)
+#     memory_usage = psutil.virtual_memory().percent
+#     gpu_status = "Using Apple's MPS GPU" if torch.backends.mps.is_available() else "GPU not available"
+#     logging.info(f"Training Time: {training_time:.2f} seconds, CPU: {cpu_usage}%, Memory: {memory_usage}%, GPU: {gpu_status}")
+#     logging.info("Training completed successfully.")
+#     return ppo_model, model_path
+from stable_baselines3.common.callbacks import EvalCallback, StopTrainingOnNoModelImprovement
+from stable_baselines3.common.vec_env import DummyVecEnv
+
 def train_rl_phase(env, result_subdir, scenario_str, pecs_params, scenario_params,
-                   total_timesteps=5000, learning_rate=0.0009809274356741915, batch_size=64, n_epochs=6):
+                   total_timesteps=5000, learning_rate=0.0009809274356741915,
+                   batch_size=64, n_epochs=6,
+                   eval_freq=1000, patience=5, min_delta=1e-2):
     logging.info(f"Starting training for {scenario_str} data with PECS: {pecs_params} and scenario params: {scenario_params}")
+    # Wrap the env for evaluation
+    eval_env = DummyVecEnv([lambda: env])
+    # Early stopping: stop after `patience` evaluations with < min_delta improvement
+    stop_callback = StopTrainingOnNoModelImprovement(
+        max_no_improvement_evals=patience,
+        min_delta=min_delta,
+        verbose=1
+    )
+    eval_callback = EvalCallback(
+        eval_env,
+        callback_on_eval=stop_callback,
+        eval_freq=eval_freq,
+        best_model_save_path=result_subdir,
+        verbose=1
+    )
+
     ppo_model = PPO(
         'MlpPolicy',
         env,
@@ -477,10 +525,18 @@ def train_rl_phase(env, result_subdir, scenario_str, pecs_params, scenario_param
         device="mps" if torch.backends.mps.is_available() else "cpu"
     )
     start_time = time.time()
-    ppo_model.learn(total_timesteps=total_timesteps)
+    # Pass our EvalCallback so training will stop early if no improvement
+    ppo_model.learn(
+        total_timesteps=total_timesteps,
+        callback=eval_callback
+    )
     end_time = time.time()
+
+    # Save final (or best) model
     model_path = os.path.join(result_subdir, "past_ppo_mesa_model.zip")
     ppo_model.save(model_path)
+
+    # Log resource usage
     training_time = end_time - start_time
     cpu_usage = psutil.cpu_percent(interval=1)
     memory_usage = psutil.virtual_memory().percent
@@ -488,6 +544,7 @@ def train_rl_phase(env, result_subdir, scenario_str, pecs_params, scenario_param
     logging.info(f"Training Time: {training_time:.2f} seconds, CPU: {cpu_usage}%, Memory: {memory_usage}%, GPU: {gpu_status}")
     logging.info("Training completed successfully.")
     return ppo_model, model_path
+
 
 def simulation_rl_phase(ppo_model, env, result_subdir, num_episodes=5):
     all_final_decisions = []
